@@ -141,6 +141,88 @@ const MODULES = [
       { id:'s4', judul:'Hukum minimum (limiting factor)', html:`
         <p>Khusus untuk penilaian <strong>kesesuaian lahan</strong>, berlaku <strong>hukum minimum</strong>: kelas kesesuaian sebuah satuan lahan ditentukan oleh <em>faktor pembatas terberat</em>, bukan rata-rata.</p>
         <p>Analoginya seperti rantai — kekuatannya ditentukan mata rantai terlemah. Lahan dengan tanah subur namun lereng sangat curam tetap dinilai rendah, karena lereng menjadi pembatas dominan.</p>
+      `},
+      { id:'s5', judul:'Anatomi Penilaian Zonasi (MCE-GIS)', html:`
+        <p>Untuk menyatukan seluruh indikator spasial menjadi satu peta keputusan, kita menggunakan metode <strong>Anatomi Penilaian Zonasi</strong> berbasis <em>MCE-GIS</em>. Terdapat 29 indikator yang terbagi ke dalam 6 kelompok konstruk utama (X1 hingga X6), masing-masing dengan kontribusi pembobotan yang berbeda:</p>
+        
+        <div class="my-6 max-w-lg mx-auto bg-white rounded-2xl shadow-md border border-gray-100 p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h4 class="font-semibold text-gray-800 text-sm flex items-center gap-2">
+              <i class="fas fa-layer-group text-green-600"></i> Anatomi Penilaian Zonasi
+            </h4>
+            <span class="text-[11px] text-gray-400 font-medium">MCE-GIS</span>
+          </div>
+          <div class="space-y-4">
+            <!-- X1 -->
+            <div>
+              <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                <span class="text-orange-850">X1 · Kerentanan Fisik</span>
+                <span class="font-mono text-gray-500">0.136</span>
+              </div>
+              <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                <div class="h-full bg-amber-700 rounded-full" style="width: 46%;"></div>
+              </div>
+            </div>
+            <!-- X2 -->
+            <div>
+              <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                <span class="text-teal-850">X2 · Kerentanan Sosial-Ekonomi</span>
+                <span class="font-mono text-gray-500">0.080</span>
+              </div>
+              <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                <div class="h-full bg-cyan-700 rounded-full" style="width: 27%;"></div>
+              </div>
+            </div>
+            <!-- X3 -->
+            <div>
+              <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                <span class="text-green-850">X3 · Daya Dukung Lingkungan Hidup</span>
+                <span class="font-mono text-gray-500">0.258</span>
+              </div>
+              <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                <div class="h-full bg-green-700 rounded-full" style="width: 87%;"></div>
+              </div>
+            </div>
+            <!-- X4 -->
+            <div>
+              <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                <span class="text-lime-850">X4 · Kesesuaian Lahan</span>
+                <span class="font-mono text-gray-500">0.138</span>
+              </div>
+              <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                <div class="h-full bg-lime-700 rounded-full" style="width: 47%;"></div>
+              </div>
+            </div>
+            <!-- X5 -->
+            <div>
+              <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                <span class="text-blue-850">X5 · Kapasitas Adaptasi</span>
+                <span class="font-mono text-gray-500">0.167</span>
+              </div>
+              <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                <div class="h-full bg-blue-600 rounded-full" style="width: 56%;"></div>
+              </div>
+            </div>
+            <!-- X6 -->
+            <div>
+              <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                <span class="text-yellow-900">X6 · Kesesuaian Komoditas FOLUR</span>
+                <span class="font-mono text-gray-500">0.120</span>
+              </div>
+              <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                <div class="h-full bg-stone-600 rounded-full" style="width: 41%;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-xs">
+            <span class="text-gray-500">Hasil akhir</span>
+            <span class="font-semibold text-green-800 flex items-center gap-1.5">
+              <i class="fas fa-vector-square"></i> Peta Zonasi 5 Kelas
+            </span>
+          </div>
+        </div>
+        
+        <p>Setiap kelompok konstruk berkontribusi secara proporsional. Struktur dan bobot ini mengontrol bagaimana kriteria digabungkan dan bagaimana satu faktor dapat bertindak sebagai pembatas utama kesesuaian wilayah.</p>
       `}
     ],
     quiz:[
