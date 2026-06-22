@@ -13,54 +13,44 @@
         h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
         .prose-body { font-family: 'Lora', serif; }
 
-        /* Brand palette — independen, tema hijau hutan/restorasi */
         :root {
             --green-900:#14361f; --green-800:#1e6b3b; --green-700:#22823f;
             --green-600:#2f9e4f; --green-100:#dcfce7; --green-50:#f0fdf4;
             --sand:#f4f1ea; --ink:#1f2937; --muted:#6b7280;
         }
 
-        /* Scrollbar */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: #eef0ea; }
         ::-webkit-scrollbar-thumb { background: #b8c2b3; border-radius: 8px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a38d; }
 
-        /* Reveal on scroll */
         .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
         .reveal.visible { opacity: 1; transform: none; }
 
-        /* Module card */
         .mod-card { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
         .mod-card:hover { transform: translateY(-6px); box-shadow: 0 22px 40px -18px rgba(20,54,31,.45); border-color: var(--green-600); }
         .mod-card:hover .mod-num { background: var(--green-700); color: #fff; }
         .mod-card:hover .mod-arrow { transform: translateX(4px); opacity: 1; }
 
-        /* Progress ring track */
         .ring-bg { stroke: #e5e7eb; }
         .ring-fg { stroke: var(--green-600); stroke-linecap: round; transition: stroke-dashoffset .6s ease; }
 
-        /* Module detail view */
         .view { display: none; }
         .view.active { display: block; animation: fade .4s ease; }
         @keyframes fade { from { opacity:0; transform: translateY(10px);} to {opacity:1; transform:none;} }
 
-        /* TOC active */
         .toc-link.active { color: var(--green-800); font-weight: 600; border-left-color: var(--green-600); background: var(--green-50); }
         .toc-link { border-left: 3px solid transparent; transition: all .2s ease; }
 
-        /* Indicator chip */
         .chip { transition: all .2s ease; }
         .chip:hover { background: var(--green-100); border-color: var(--green-600); }
 
-        /* Quiz */
         .quiz-opt { transition: all .15s ease; cursor: pointer; }
         .quiz-opt:hover { border-color: var(--green-600); background: var(--green-50); }
         .quiz-opt.correct { border-color:#16a34a; background:#dcfce7; }
         .quiz-opt.wrong { border-color:#dc2626; background:#fee2e2; }
         .quiz-opt.disabled { pointer-events:none; }
 
-        /* Hero pattern (kontur) */
         .hero-contour { background-image:
             radial-gradient(circle at 20% 30%, rgba(47,158,79,.10), transparent 40%),
             radial-gradient(circle at 80% 70%, rgba(30,107,59,.12), transparent 45%); }
@@ -75,7 +65,6 @@
 </head>
 <body>
 
-    <!-- ============ HEADER ============ -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-50 no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -109,10 +98,7 @@
         </div>
     </header>
 
-    <!-- ============ HOME VIEW ============ -->
     <main id="homeView" class="view active">
-
-        <!-- Hero -->
         <section class="hero-contour border-b border-gray-200">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
                 <div class="grid lg:grid-cols-2 gap-10 items-center">
@@ -148,7 +134,6 @@
                         </div>
                     </div>
 
-                    <!-- Hero visual: stylized layered map -->
                     <div class="reveal hidden lg:block">
                         <div class="relative">
                             <div class="absolute inset-0 rounded-2xl" style="background:linear-gradient(135deg,var(--green-100),transparent);transform:rotate(-3deg)"></div>
@@ -169,7 +154,6 @@
             </div>
         </section>
 
-        <!-- Module grid -->
         <section id="daftar-modul" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div class="reveal mb-10">
                 <span class="text-xs font-semibold tracking-wide uppercase text-green-700">Kurikulum</span>
@@ -182,7 +166,6 @@
             <div id="moduleGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
 
-        <!-- Tentang -->
         <section id="tentang" class="bg-white border-t border-gray-200">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <div class="grid lg:grid-cols-3 gap-10">
@@ -217,10 +200,8 @@
         </section>
     </main>
 
-    <!-- ============ MODULE DETAIL VIEW ============ -->
     <main id="moduleView" class="view">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <!-- Breadcrumb + nav -->
             <div class="flex items-center justify-between mb-6 no-print">
                 <button onclick="goHome()" class="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-green-700">
                     <i class="fas fa-arrow-left"></i> Kembali ke Daftar Modul
@@ -232,7 +213,6 @@
             </div>
 
             <div class="grid lg:grid-cols-[260px_1fr] gap-8">
-                <!-- TOC sidebar -->
                 <aside class="no-print">
                     <div class="lg:sticky lg:top-24">
                         <div class="bg-white rounded-xl border border-gray-200 p-4">
@@ -245,7 +225,6 @@
                     </div>
                 </aside>
 
-                <!-- Content -->
                 <article>
                     <div id="moduleContent" class="prose-body"></div>
                 </article>
@@ -253,7 +232,6 @@
         </div>
     </main>
 
-    <!-- ============ FOOTER ============ -->
     <footer class="bg-gray-900 text-gray-400 py-8 no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-3">
