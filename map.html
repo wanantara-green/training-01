@@ -764,6 +764,7 @@
         const toolNotif = document.getElementById('toolNotification');
         const toolNotifText = document.getElementById('toolNotifText');
         const identifyToolBtn = document.querySelector('.map-tool-btn[data-tool="identify"]');
+        const measureToolBtn = document.querySelector('.map-tool-btn[data-tool="measure"]');
 
         function showToolNotification(text) {
             toolNotifText.textContent = text;
@@ -772,6 +773,12 @@
             toolNotif._timeout = setTimeout(() => {
                 toolNotif.style.opacity = '0';
             }, 1500);
+        }
+
+        function updateMapCursor() {
+            const mapEl = document.getElementById('map');
+            if (!mapEl) return;
+            mapEl.style.cursor = (identifyMode || measureMode) ? 'crosshair' : '';
         }
 
         toolBtns.forEach(btn => {
@@ -803,15 +810,37 @@
 
                 // Toggle identify mode
                 if (tool === 'identify') {
+                    measureMode = false;
+                    clearMeasurement();
+                    measureToolBtn?.classList.remove('active');
                     identifyMode = !identifyMode;
                     if (identifyMode) {
                         this.classList.add('active');
-                        document.getElementById('map').style.cursor = 'crosshair';
+                        updateMapCursor();
                         showToolNotification('Mode Info Atribut AKTIF - klik fitur di peta');
                     } else {
                         this.classList.remove('active');
-                        document.getElementById('map').style.cursor = '';
+                        updateMapCursor();
                         showToolNotification('Mode Info Atribut NONAKTIF');
+                    }
+                    return;
+                }
+
+                // Toggle measurement mode
+                if (tool === 'measure') {
+                    identifyMode = false;
+                    identifyToolBtn?.classList.remove('active');
+                    measureMode = !measureMode;
+                    if (measureMode) {
+                        this.classList.add('active');
+                        clearMeasurement();
+                        updateMapCursor();
+                        showToolNotification('Mode Pengukuran AKTIF - klik dua titik di peta');
+                    } else {
+                        this.classList.remove('active');
+                        clearMeasurement();
+                        updateMapCursor();
+                        showToolNotification('Mode Pengukuran NONAKTIF');
                     }
                     return;
                 }
@@ -1253,9 +1282,74 @@
 
         // ============ IDENTIFY / INFO POPUP ON CLICK ============
         let identifyMode = true;
+        let measureMode = false;
+        const measurementLayer = L.layerGroup().addTo(map);
+        let measurementPoints = [];
+        let measurementLine = null;
+        let measurementPopup = null;
         if (identifyToolBtn) {
             identifyToolBtn.classList.add('active');
-            document.getElementById('map').style.cursor = 'crosshair';
+            updateMapCursor();
+        }
+
+        function formatDistance(distanceMeters) {
+            if (distanceMeters >= 1000) {
+                return `${(distanceMeters / 1000).toFixed(2)} km`;
+            }
+            return `${Math.round(distanceMeters)} m`;
+        }
+
+        function clearMeasurement() {
+            measurementPoints = [];
+            measurementLayer.clearLayers();
+            measurementLine = null;
+            if (measurementPopup) {
+                map.closePopup(measurementPopup);
+                measurementPopup = null;
+            }
+        }
+
+        function doMeasure(e) {
+            if (!measureMode) return false;
+
+            if (measurementPoints.length >= 2) {
+                clearMeasurement();
+            }
+
+            measurementPoints.push(e.latlng);
+            L.circleMarker(e.latlng, {
+                radius: 5,
+                color: '#166534',
+                weight: 2,
+                fillColor: '#22c55e',
+                fillOpacity: 0.95,
+            }).addTo(measurementLayer);
+
+            if (measurementPoints.length === 1) {
+                showToolNotification('Titik pertama dipilih');
+                return true;
+            }
+
+            const [start, end] = measurementPoints;
+            measurementLine = L.polyline([start, end], {
+                color: '#166534',
+                weight: 3,
+                dashArray: '8 6',
+            }).addTo(measurementLayer);
+
+            const distance = map.distance(start, end);
+            const midpoint = L.latLng(
+                (start.lat + end.lat) / 2,
+                (start.lng + end.lng) / 2,
+            );
+
+            measurementPopup = L.popup({ closeButton: false, autoClose: false, closeOnClick: false })
+                .setLatLng(midpoint)
+                .setContent(`<div style="font-size:12px;font-weight:600;color:#166534;">Jarak: ${formatDistance(distance)}</div>`)
+                .openOn(map);
+
+            showToolNotification(`Jarak terukur: ${formatDistance(distance)}`);
+            return true;
         }
 
         function getActiveLayerKeys() {
@@ -1334,6 +1428,8 @@
         }
 
         function doIdentify(e) {
+            if (doMeasure(e)) return;
+
             // Hanya tampilkan popup saat mode Info Atribut aktif
             if (!identifyMode) return;
 
@@ -1399,7 +1495,7 @@
         let hoverTimer = null;
 
         function resetHoverCursor() {
-            mapContainer.style.cursor = identifyMode ? 'crosshair' : '';
+            mapContainer.style.cursor = (identifyMode || measureMode) ? 'crosshair' : '';
         }
 
         function checkHover(e) {
@@ -1410,6 +1506,10 @@
 
         map.on('mousemove', function(e) {
             // Deteksi hover hanya saat mode Info Atribut aktif
+            if (measureMode) {
+                resetHoverCursor();
+                return;
+            }
             if (!identifyMode) {
                 resetHoverCursor();
                 return;
