@@ -1,233 +1,235 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modul Pelatihan — Zonasi Spasial Kabupaten Luwu</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; color: #1f2937; background: #f7f8f5; }
-        h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
-        .prose-body { font-family: 'Lora', serif; }
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Beranda Pelatihan — Zonasi Spasial Kabupaten Luwu</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+		body { font-family: 'Poppins', sans-serif; color: #1f2937; background: #f7f8f5; }
+		h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
+		.prose-body { font-family: 'Lora', serif; }
 
-        :root {
-            --green-900:#14361f; --green-800:#1e6b3b; --green-700:#22823f;
-            --green-600:#2f9e4f; --green-100:#dcfce7; --green-50:#f0fdf4;
-            --sand:#f4f1ea; --ink:#1f2937; --muted:#6b7280;
-        }
+		:root {
+			--green-900:#14361f; --green-800:#1e6b3b; --green-700:#22823f;
+			--green-600:#2f9e4f; --green-100:#dcfce7; --green-50:#f0fdf4;
+		}
 
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #eef0ea; }
-        ::-webkit-scrollbar-thumb { background: #b8c2b3; border-radius: 8px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a38d; }
+		::-webkit-scrollbar { width: 8px; height: 8px; }
+		::-webkit-scrollbar-track { background: #eef0ea; }
+		::-webkit-scrollbar-thumb { background: #b8c2b3; border-radius: 8px; }
+		::-webkit-scrollbar-thumb:hover { background: #94a38d; }
 
-        .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
-        .reveal.visible { opacity: 1; transform: none; }
+		.hero-contour { background-image:
+			radial-gradient(circle at 20% 30%, rgba(47,158,79,.10), transparent 40%),
+			radial-gradient(circle at 80% 70%, rgba(30,107,59,.12), transparent 45%); }
 
-        .mod-card { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
-        .mod-card:hover { transform: translateY(-6px); box-shadow: 0 22px 40px -18px rgba(20,54,31,.45); border-color: var(--green-600); }
-        .mod-card:hover .mod-num { background: var(--green-700); color: #fff; }
-        .mod-card:hover .mod-arrow { transform: translateX(4px); opacity: 1; }
-
-        .ring-bg { stroke: #e5e7eb; }
-        .ring-fg { stroke: var(--green-600); stroke-linecap: round; transition: stroke-dashoffset .6s ease; }
-
-        .view { display: none; }
-        .view.active { display: block; animation: fade .4s ease; }
-        @keyframes fade { from { opacity:0; transform: translateY(10px);} to {opacity:1; transform:none;} }
-
-        .toc-link.active { color: var(--green-800); font-weight: 600; border-left-color: var(--green-600); background: var(--green-50); }
-        .toc-link { border-left: 3px solid transparent; transition: all .2s ease; }
-
-        .chip { transition: all .2s ease; }
-        .chip:hover { background: var(--green-100); border-color: var(--green-600); }
-
-        .quiz-opt { transition: all .15s ease; cursor: pointer; }
-        .quiz-opt:hover { border-color: var(--green-600); background: var(--green-50); }
-        .quiz-opt.correct { border-color:#16a34a; background:#dcfce7; }
-        .quiz-opt.wrong { border-color:#dc2626; background:#fee2e2; }
-        .quiz-opt.disabled { pointer-events:none; }
-
-        .hero-contour { background-image:
-            radial-gradient(circle at 20% 30%, rgba(47,158,79,.10), transparent 40%),
-            radial-gradient(circle at 80% 70%, rgba(30,107,59,.12), transparent 45%); }
-
-        .mark { background: linear-gradient(transparent 60%, var(--green-100) 60%); }
-
-        @media print {
-            .no-print { display:none !important; }
-            .view { display:block !important; }
-        }
-    </style>
+		.mark { background: linear-gradient(transparent 60%, var(--green-100) 60%); }
+	</style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col">
 
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-50 no-print">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <a href="#" onclick="goHome();return false;" class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-lg flex items-center justify-center text-white"
-                         style="background:linear-gradient(135deg,var(--green-700),var(--green-900));">
-                        <i class="fas fa-seedling"></i>
-                    </div>
-                    <div class="leading-tight">
-                        <h1 class="text-base font-bold" style="color:var(--green-800)">Modul Pelatihan Zonasi Spasial</h1>
-                        <p class="text-[11px] text-gray-500">Kabupaten Luwu · Sulawesi Selatan</p>
-                    </div>
-                </a>
+	<header class="bg-white/90 backdrop-blur border-b border-gray-200 sticky top-0 z-50">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="flex items-center justify-between h-16">
+				<a href="index.html" class="flex items-center gap-3">
+					<div class="w-10 h-10 rounded-lg flex items-center justify-center text-white"
+						 style="background:linear-gradient(135deg,var(--green-700),var(--green-900));">
+						<i class="fas fa-seedling"></i>
+					</div>
+					<div class="leading-tight">
+						<h1 class="text-base font-bold" style="color:var(--green-800)">Pelatihan Zonasi Spasial</h1>
+						<p class="text-[11px] text-gray-500">Kabupaten Luwu · Sulawesi Selatan</p>
+					</div>
+				</a>
 
-                <nav class="hidden md:flex items-center gap-6">
-                    <a href="#" onclick="goHome();return false;" class="text-gray-700 hover:text-green-700 font-medium text-sm">Beranda</a>
-                    <a href="#daftar-modul" onclick="scrollToModul();return false;" class="text-gray-700 hover:text-green-700 font-medium text-sm">Daftar Modul</a>
-                    <a href="map.html" class="text-gray-700 hover:text-green-700 font-medium text-sm">Peta Interaktif</a>
-                    <a href="#tentang" class="text-gray-700 hover:text-green-700 font-medium text-sm">Tentang</a>
-                    <span id="progressBadge" class="hidden sm:inline-flex items-center gap-2 text-xs font-medium text-green-800 bg-green-50 border border-green-200 px-3 py-1.5 rounded-full">
-                        <i class="fas fa-circle-check"></i> <span id="progressText">0 / 6 modul</span>
-                    </span>
-                </nav>
+				<nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+					<a href="index.html" class="text-green-700 border-b-2 border-green-600 pb-1">Beranda</a>
+					<a href="modul.html#daftar-modul" class="text-gray-700 hover:text-green-700">Daftar Modul</a>
+					<a href="map.html" class="text-gray-700 hover:text-green-700">Peta Interaktif</a>
+				</nav>
 
-                <button id="mobileBtn" class="md:hidden text-gray-700"><i class="fas fa-bars text-xl"></i></button>
-            </div>
-            <div id="mobileMenu" class="hidden md:hidden pb-4 space-y-1">
-                <a href="#" onclick="goHome();return false;" class="block py-2 text-gray-700 text-sm">Beranda</a>
-                <a href="#daftar-modul" onclick="scrollToModul();return false;" class="block py-2 text-gray-700 text-sm">Daftar Modul</a>
-                <a href="map.html" class="block py-2 text-gray-700 text-sm">Peta Interaktif</a>
-                <a href="#tentang" class="block py-2 text-gray-700 text-sm">Tentang</a>
-            </div>
-        </div>
-    </header>
+				<button id="mobileBtn" class="md:hidden text-gray-700" aria-label="Buka menu navigasi">
+					<i class="fas fa-bars text-xl"></i>
+				</button>
+			</div>
+			<div id="mobileMenu" class="hidden md:hidden pb-4 space-y-1">
+				<a href="index.html" class="block rounded-lg bg-green-50 border border-green-200 px-3 py-2 text-green-700 font-medium text-sm">Beranda</a>
+				<a href="modul.html#daftar-modul" class="block py-2 text-gray-700 text-sm">Daftar Modul</a>
+				<a href="map.html" class="block py-2 text-gray-700 text-sm">Peta Interaktif</a>
+			</div>
+		</div>
+	</header>
 
-    <main id="homeView" class="view active">
-        <section class="hero-contour border-b border-gray-200">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
-                <div class="max-w-4xl">
-                    <div class="reveal">
-                        <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-wide uppercase text-green-800 bg-green-100 px-3 py-1.5 rounded-full mb-5">
-                            <i class="fas fa-graduation-cap"></i> Penguatan Kapasitas · FOLUR
-                        </span>
-                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight" style="color:var(--green-900)">
-                            Belajar Membaca, Menyusun, dan Menerapkan
-                            <span class="mark">Zonasi Spasial</span> Kabupaten Luwu
-                        </h2>
-                        <p class="prose-body text-lg text-gray-600 mt-5 leading-relaxed">
-                            Modul pembelajaran mandiri untuk pemerintah daerah, penyuluh, dan pemangku kepentingan —
-                            dari konsep dasar hingga interpretasi peta kesesuaian lahan, kerentanan iklim,
-                            dan kawasan rawan bencana berbasis analisis MCE-GIS.
-                        </p>
-                        <div class="flex flex-wrap gap-3 mt-7">
-                            <a href="#daftar-modul" onclick="scrollToModul();return false;"
-                               class="inline-flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white font-medium px-6 py-3 rounded-lg transition"
-                               style="background:var(--green-700)">
-                                Mulai Belajar <i class="fas fa-arrow-right"></i>
-                            </a>
-                            <button onclick="openModule(0)"
-                               class="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-green-800 font-medium px-6 py-3 rounded-lg border border-green-200 transition">
-                                <i class="fas fa-play-circle"></i> Modul Pengantar
-                            </button>
-                        </div>
-                        <div class="flex flex-wrap gap-6 mt-8 text-sm">
-                            <div><span class="text-2xl font-bold" style="color:var(--green-800)">6</span><span class="text-gray-500 ml-1.5">Modul</span></div>
-                            <div><span class="text-2xl font-bold" style="color:var(--green-800)">29</span><span class="text-gray-500 ml-1.5">Indikator</span></div>
-                            <div><span class="text-2xl font-bold" style="color:var(--green-800)">22</span><span class="text-gray-500 ml-1.5">Kecamatan</span></div>
-                            <div><span class="text-2xl font-bold" style="color:var(--green-800)">±303</span><span class="text-gray-500 ml-1.5">ribu ha</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+	<main class="flex-1 hero-contour border-b border-gray-200 flex items-center">
+		<section class="w-full">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+				<div class="max-w-4xl">
+					<span class="inline-flex items-center gap-2 text-xs font-semibold tracking-wide uppercase text-green-800 bg-green-100 px-3 py-1.5 rounded-full mb-5">
+						<i class="fas fa-graduation-cap"></i> Penguatan Kapasitas · FOLUR
+					</span>
+					<h2 class="text-3xl sm:text-4xl lg:text-6xl font-bold leading-tight" style="color:var(--green-900)">
+						Belajar Membaca, Menyusun, dan Menerapkan
+						<span class="mark">Zonasi Spasial</span> Kabupaten Luwu
+					</h2>
+					<p class="prose-body text-lg sm:text-xl text-gray-600 mt-6 leading-relaxed max-w-3xl">
+						Halaman beranda pelatihan untuk mengantar peserta memahami alur belajar, konteks FOLUR,
+						dan akses cepat menuju daftar modul pembelajaran zonasi spasial.
+					</p>
 
-        <section id="daftar-modul" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="reveal mb-10">
-                <span class="text-xs font-semibold tracking-wide uppercase text-green-700">Kurikulum</span>
-                <h3 class="text-2xl sm:text-3xl font-bold mt-2" style="color:var(--green-900)">Daftar Modul Pelatihan</h3>
-                <p class="prose-body text-gray-600 mt-3 max-w-3xl">
-                    Enam modul tersusun berurutan: dari fondasi konsep, metode analisis, enam kelompok indikator spasial,
-                    hingga penerapan dalam peraturan zonasi dan pemantauannya. Setiap modul dapat dipelajari mandiri.
-                </p>
-            </div>
-            <div id="moduleGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-        </section>
+					<div class="mt-8">
+						<a href="modul.html?open=0"
+						   class="inline-flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white font-semibold px-7 py-3.5 rounded-xl shadow-lg shadow-green-900/15 transition"
+						   style="background:linear-gradient(135deg,var(--green-700),var(--green-800));">
+							<i class="fas fa-play-circle"></i> Mulai dari Modul 1
+						</a>
+						<p class="text-sm text-gray-500 mt-3">Mulai dari pengantar jika peserta baru pertama kali mengikuti pelatihan ini.</p>
 
-        <section id="tentang" class="bg-white border-t border-gray-200">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <div class="grid lg:grid-cols-3 gap-10">
-                    <div class="reveal">
-                        <h3 class="text-2xl font-bold" style="color:var(--green-900)">Tentang Modul Ini</h3>
-                        <p class="prose-body text-gray-600 mt-4 leading-relaxed">
-                            Materi disusun sebagai bagian dari pengembangan kerangka zonasi spasial Kabupaten Luwu,
-                            mengintegrasikan pendekatan FOLUR (Food Systems, Land Use, and Restoration) dengan
-                            metode evaluasi multi-kriteria berbasis SIG.
-                        </p>
-                    </div>
-                    <div class="reveal">
-                        <h4 class="font-semibold text-gray-800 mb-3 flex items-center gap-2"><i class="fas fa-users text-green-600"></i> Sasaran Peserta</h4>
-                        <ul class="prose-body space-y-2 text-gray-600 text-sm">
-                            <li>• Perangkat daerah (Bappeda, PUPR, DLH, DPMPTSP, BPBD)</li>
-                            <li>• Pemerintah kecamatan dan desa</li>
-                            <li>• Penyuluh dan pendamping lapangan</li>
-                            <li>• Mitra pembangunan dan akademisi</li>
-                        </ul>
-                    </div>
-                    <div class="reveal">
-                        <h4 class="font-semibold text-gray-800 mb-3 flex items-center gap-2"><i class="fas fa-bullseye text-green-600"></i> Capaian Pembelajaran</h4>
-                        <ul class="prose-body space-y-2 text-gray-600 text-sm">
-                            <li>• Memahami konsep dan dasar hukum zonasi</li>
-                            <li>• Membaca peta dan indikator pembobotan</li>
-                            <li>• Menafsirkan kelas kesesuaian dan risiko</li>
-                            <li>• Menerapkan zonasi dalam perizinan & M&E</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+						<div class="flex flex-wrap gap-3 mt-4">
+							<a href="modul.html#daftar-modul"
+							   class="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-green-800 font-medium px-6 py-3 rounded-lg border border-green-200 transition">
+								Masuk ke Daftar Modul <i class="fas fa-arrow-right"></i>
+							</a>
+							<a href="map.html"
+							   class="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-green-800 font-medium px-6 py-3 rounded-lg border border-green-200 transition">
+								<i class="fas fa-map"></i> Lihat Peta Interaktif
+							</a>
+						</div>
+					</div>
 
-    <main id="moduleView" class="view">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="flex items-center justify-between mb-6 no-print">
-                <button onclick="goHome()" class="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-green-700">
-                    <i class="fas fa-arrow-left"></i> Kembali ke Daftar Modul
-                </button>
-                <div class="flex items-center gap-2">
-                    <button id="prevBtn" onclick="navModule(-1)" class="inline-flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50"><i class="fas fa-chevron-left text-xs"></i> Sebelumnya</button>
-                    <button id="nextBtn" onclick="navModule(1)" class="inline-flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50">Berikutnya <i class="fas fa-chevron-right text-xs"></i></button>
-                </div>
-            </div>
+					<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-10 max-w-3xl">
+						<div class="bg-white/80 backdrop-blur rounded-2xl border border-gray-200 px-4 py-4">
+							<div class="text-2xl font-bold" style="color:var(--green-800)">6</div>
+							<div class="text-sm text-gray-500">Modul</div>
+						</div>
+						<div class="bg-white/80 backdrop-blur rounded-2xl border border-gray-200 px-4 py-4">
+							<div class="text-2xl font-bold" style="color:var(--green-800)">29</div>
+							<div class="text-sm text-gray-500">Indikator</div>
+						</div>
+						<div class="bg-white/80 backdrop-blur rounded-2xl border border-gray-200 px-4 py-4">
+							<div class="text-2xl font-bold" style="color:var(--green-800)">22</div>
+							<div class="text-sm text-gray-500">Kecamatan</div>
+						</div>
+						<div class="bg-white/80 backdrop-blur rounded-2xl border border-gray-200 px-4 py-4">
+							<div class="text-2xl font-bold" style="color:var(--green-800)">303</div>
+							<div class="text-sm text-gray-500">Ribu ha</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
 
-            <div class="grid lg:grid-cols-[260px_1fr] gap-8">
-                <aside class="no-print">
-                    <div class="lg:sticky lg:top-24">
-                        <div class="bg-white rounded-xl border border-gray-200 p-4">
-                            <p class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">Daftar Isi</p>
-                            <nav id="tocNav" class="space-y-1 text-sm"></nav>
-                        </div>
-                        <button onclick="window.print()" class="mt-3 w-full inline-flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-green-700 border border-gray-200 rounded-lg py-2 hover:bg-gray-50">
-                            <i class="fas fa-print"></i> Cetak / PDF
-                        </button>
-                    </div>
-                </aside>
+	<section class="bg-white border-t border-gray-200">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+			<div class="max-w-3xl">
+				<span class="text-xs font-semibold tracking-wide uppercase text-green-700">Alur Belajar</span>
+				<h3 class="text-2xl sm:text-3xl font-bold mt-2" style="color:var(--green-900)">Mulai dari pengantar, lanjut ke materi, lalu baca peta</h3>
+				<p class="prose-body text-gray-600 mt-4 leading-relaxed">
+					Beranda ini dirancang sebagai titik awal. Peserta dapat masuk ke modul pengantar terlebih dahulu,
+					menelusuri seluruh daftar modul sesuai urutan kurikulum, lalu menggunakan peta interaktif untuk
+					menghubungkan konsep pembelajaran dengan data spasial di lapangan.
+				</p>
+			</div>
 
-                <article>
-                    <div id="moduleContent" class="prose-body"></div>
-                </article>
-            </div>
-        </div>
-    </main>
+			<div class="grid md:grid-cols-3 gap-6 mt-10">
+				<a href="index.html" class="block rounded-2xl border border-green-200 bg-green-50 p-6 hover:border-green-300 transition">
+					<div class="w-12 h-12 rounded-xl bg-green-700 text-white flex items-center justify-center mb-4">
+						<i class="fas fa-house"></i>
+					</div>
+					<p class="text-sm font-semibold text-green-700 uppercase tracking-wide">Tahap 1</p>
+					<h4 class="text-lg font-bold mt-2 text-gray-900">Pahami konteks</h4>
+					<p class="prose-body text-sm text-gray-600 mt-3">Mulai dari beranda untuk memahami tujuan pelatihan, struktur pembelajaran, dan pintu masuk ke materi.</p>
+				</a>
 
-    <footer class="bg-gray-900 text-gray-400 py-8 no-print">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white" style="background:var(--green-700)"><i class="fas fa-seedling text-sm"></i></div>
-                <span class="text-sm text-gray-300">Modul Pelatihan Zonasi Spasial — Kabupaten Luwu</span>
-            </div>
-            <p class="text-xs">Materi penguatan kapasitas perencanaan ruang berbasis FOLUR · 2026</p>
-        </div>
-    </footer>
+				<a href="modul.html#daftar-modul" class="block rounded-2xl border border-gray-200 bg-white p-6 hover:border-green-300 hover:shadow-sm transition">
+					<div class="w-12 h-12 rounded-xl bg-white border border-green-200 text-green-700 flex items-center justify-center mb-4">
+						<i class="fas fa-book-open"></i>
+					</div>
+					<p class="text-sm font-semibold text-green-700 uppercase tracking-wide">Tahap 2</p>
+					<h4 class="text-lg font-bold mt-2 text-gray-900">Pelajari modul</h4>
+					<p class="prose-body text-sm text-gray-600 mt-3">Buka daftar modul untuk mengikuti materi secara bertahap, dari konsep dasar hingga pembacaan hasil zonasi.</p>
+				</a>
 
-    <script src="js/modul-data.js"></script>
-    <script src="js/app.js"></script>
+				<a href="map.html" class="block rounded-2xl border border-gray-200 bg-white p-6 hover:border-green-300 hover:shadow-sm transition">
+					<div class="w-12 h-12 rounded-xl bg-white border border-green-200 text-green-700 flex items-center justify-center mb-4">
+						<i class="fas fa-map-location-dot"></i>
+					</div>
+					<p class="text-sm font-semibold text-green-700 uppercase tracking-wide">Tahap 3</p>
+					<h4 class="text-lg font-bold mt-2 text-gray-900">Eksplorasi peta</h4>
+					<p class="prose-body text-sm text-gray-600 mt-3">Gunakan peta interaktif untuk melihat layer, legenda, dan info atribut sebagai penerapan langsung dari materi pelatihan.</p>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="bg-[#f4f7f1] border-t border-gray-200">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+			<div class="grid lg:grid-cols-[.95fr_1.05fr] gap-10 items-start">
+				<div>
+					<span class="text-xs font-semibold tracking-wide uppercase text-green-700">Peserta Pelatihan</span>
+					<h3 class="text-2xl sm:text-3xl font-bold mt-2" style="color:var(--green-900)">Dirancang untuk pelaksana teknis, pengambil keputusan, dan pendamping lapangan</h3>
+					<p class="prose-body text-gray-600 mt-4 leading-relaxed">
+						Beranda ini tidak hanya menjadi pintu masuk materi, tetapi juga membantu setiap jenis peserta
+						menemukan cara memakai pelatihan sesuai perannya: apakah untuk memahami dasar kebijakan,
+						menafsirkan peta, atau mendukung implementasi di lapangan.
+					</p>
+				</div>
+
+				<div class="grid sm:grid-cols-2 gap-4">
+					<div class="rounded-2xl bg-white border border-gray-200 p-5 shadow-sm">
+						<div class="w-11 h-11 rounded-xl bg-green-50 text-green-700 flex items-center justify-center mb-4 border border-green-100">
+							<i class="fas fa-building-columns"></i>
+						</div>
+						<h4 class="font-bold text-gray-900">Pemerintah Daerah</h4>
+						<p class="prose-body text-sm text-gray-600 mt-3">Membantu perangkat daerah membaca dasar teknis zonasi untuk perizinan, penataan ruang, dan sinkronisasi kebijakan.</p>
+					</div>
+
+					<div class="rounded-2xl bg-white border border-gray-200 p-5 shadow-sm">
+						<div class="w-11 h-11 rounded-xl bg-green-50 text-green-700 flex items-center justify-center mb-4 border border-green-100">
+							<i class="fas fa-people-group"></i>
+						</div>
+						<h4 class="font-bold text-gray-900">Kecamatan dan Desa</h4>
+						<p class="prose-body text-sm text-gray-600 mt-3">Memudahkan aparat wilayah memahami konteks lokal, prioritas desa, dan implikasi zonasi terhadap penggunaan ruang.</p>
+					</div>
+
+					<div class="rounded-2xl bg-white border border-gray-200 p-5 shadow-sm">
+						<div class="w-11 h-11 rounded-xl bg-green-50 text-green-700 flex items-center justify-center mb-4 border border-green-100">
+							<i class="fas fa-person-digging"></i>
+						</div>
+						<h4 class="font-bold text-gray-900">Penyuluh dan Pendamping</h4>
+						<p class="prose-body text-sm text-gray-600 mt-3">Memberi bekal praktis untuk menerjemahkan indikator dan hasil zonasi menjadi pendampingan yang lebih tepat sasaran.</p>
+					</div>
+
+					<div class="rounded-2xl bg-white border border-gray-200 p-5 shadow-sm">
+						<div class="w-11 h-11 rounded-xl bg-green-50 text-green-700 flex items-center justify-center mb-4 border border-green-100">
+							<i class="fas fa-graduation-cap"></i>
+						</div>
+						<h4 class="font-bold text-gray-900">Mitra dan Akademisi</h4>
+						<p class="prose-body text-sm text-gray-600 mt-3">Menyediakan ringkasan metodologis dan praktik pembacaan peta yang bisa dipakai untuk studi, penguatan program, dan evaluasi.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer class="bg-gray-900 text-gray-400 py-8">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+			<div class="flex items-center gap-3">
+				<div class="w-8 h-8 rounded-lg flex items-center justify-center text-white" style="background:var(--green-700)"><i class="fas fa-seedling text-sm"></i></div>
+				<span class="text-sm text-gray-300">Beranda Pelatihan Zonasi Spasial — Kabupaten Luwu</span>
+			</div>
+			<p class="text-xs">Arahkan peserta ke daftar modul sebelum memulai pembelajaran detail.</p>
+		</div>
+	</footer>
+
+	<script>
+		document.getElementById('mobileBtn')?.addEventListener('click', () => {
+			document.getElementById('mobileMenu')?.classList.toggle('hidden');
+		});
+	</script>
 </body>
 </html>

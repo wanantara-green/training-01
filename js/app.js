@@ -4,12 +4,47 @@
 
 let currentModule = 0;
 const completed = new Set();
+const PROGRESS_STORAGE_KEY = 'training-01-modul-progress';
+
+function loadProgress(){
+  try {
+    const raw = window.localStorage.getItem(PROGRESS_STORAGE_KEY);
+    if (!raw) return;
+
+    const saved = JSON.parse(raw);
+    if (!Array.isArray(saved)) return;
+
+    saved.forEach(id => {
+      if (Number.isInteger(id) && id >= 0 && id < MODULES.length) {
+        completed.add(id);
+      }
+    });
+  } catch (_) {
+    // Abaikan data progres yang rusak atau storage yang tidak tersedia.
+  }
+}
+
+function saveProgress(){
+  try {
+    window.localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify([...completed]));
+  } catch (_) {
+    // Abaikan kegagalan simpan agar alur belajar tetap berjalan.
+  }
+}
 
 /* ---------- Inject content styles (prose) ---------- */
 (function injectStyles(){
   const css = `
+  #moduleContent{max-width:860px;}
+  .module-hero{padding:0 0 1.5rem;margin-bottom:.25rem;border-bottom:1px solid #eef0ea;}
+  .module-hero-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.9rem;}
+  .module-kicker{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .7rem;border-radius:999px;background:var(--green-50);border:1px solid var(--green-100);font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--green-800);font-family:'Poppins';}
+  .module-meta{display:inline-flex;align-items:center;gap:.45rem;font-size:.85rem;color:#6b7280;font-family:'Poppins';}
   #moduleContent h2{font-family:'Poppins';font-size:1.6rem;font-weight:700;color:var(--green-900);margin:0 0 .25rem;}
-  #moduleContent .lead{color:#6b7280;font-size:1.02rem;margin-bottom:1.5rem;}
+  #moduleContent .lead{color:#6b7280;font-size:1.02rem;margin:0 0 1.75rem;line-height:1.8;padding-bottom:1.25rem;border-bottom:1px solid #eef0ea;}
+  .module-hero-footer{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;}
+  .module-status{display:inline-flex;align-items:center;gap:.5rem;padding:.45rem .8rem;border-radius:999px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;font-size:.82rem;font-weight:600;font-family:'Poppins';}
+  .module-status.is-complete{background:#f0fdf4;border-color:#bbf7d0;color:#166534;}
   #moduleContent section{scroll-margin-top:96px;padding:1.75rem 0;border-top:1px solid #eef0ea;}
   #moduleContent section:first-of-type{border-top:none;padding-top:.5rem;}
   #moduleContent h3{font-family:'Poppins';font-size:1.15rem;font-weight:600;color:var(--green-800);margin:0 0 .85rem;display:flex;gap:.6rem;align-items:baseline;}
@@ -22,6 +57,7 @@ const completed = new Set();
   #moduleContent th{background:var(--green-50);color:var(--green-800);text-align:left;padding:.6rem .75rem;border-bottom:2px solid var(--green-100);font-weight:600;}
   #moduleContent td{padding:.55rem .75rem;border-bottom:1px solid #eef0ea;color:#374151;}
   #moduleContent tr:hover td{background:#fafdf9;}
+  #moduleContent blockquote{margin:1.25rem 0;padding:1rem 1.1rem;border-left:4px solid var(--green-600);background:#f8fbf8;color:#35513d;border-radius:.5rem;}
   .callout{display:flex;gap:.7rem;background:var(--green-50);border:1px solid var(--green-100);border-left:4px solid var(--green-600);border-radius:.6rem;padding:.9rem 1rem;margin:1.25rem 0;color:#1f4d2c;font-size:.92rem;line-height:1.6;}
   .callout i{color:var(--green-700);margin-top:.15rem;}
   .formula{font-family:ui-monospace,monospace;background:#14361f;color:#dcfce7;padding:1rem 1.25rem;border-radius:.6rem;text-align:center;font-size:1.05rem;margin:1rem 0;}
@@ -84,7 +120,7 @@ function buildModuleGrid(){
   grid.innerHTML = MODULES.map((m,i)=>`
     <button onclick="openModule(${m.id})" class="mod-card reveal text-left bg-white rounded-2xl border border-gray-200 p-6 flex flex-col">
       <div class="flex items-start justify-between mb-4">
-        <span class="mod-num w-11 h-11 rounded-xl bg-green-50 text-green-700 flex items-center justify-center text-lg transition" style="color:var(--green-700)">
+        <span class="mod-num w-11 h-11 rounded-xl bg-green-50 text-green-700 flex items-center justify-center text-lg transition">
           <i class="fas ${m.ikon}"></i>
         </span>
         <span class="modDone text-green-600 text-lg ${completed.has(m.id)?'':'invisible'}" data-done="${m.id}"><i class="fas fa-circle-check"></i></span>
@@ -117,7 +153,22 @@ function openModule(id){
     </a>`;
 
   // Content
-  let html = `<h2>${m.judul}</h2><p class="lead">${m.ringkas}</p>`;
+  const moduleCompleted = completed.has(m.id);
+  let html = `
+    <div class="module-hero">
+      <div class="module-hero-top">
+        <span class="module-kicker">${m.kode}</span>
+        <span class="module-meta"><i class="far fa-clock"></i> ${m.durasi}</span>
+      </div>
+      <h2>${m.judul}</h2>
+      <p class="lead">${m.ringkas}</p>
+      <div class="module-hero-footer">
+        <span class="module-status ${moduleCompleted ? 'is-complete' : ''}">
+          <i class="fas ${moduleCompleted ? 'fa-circle-check' : 'fa-hourglass-half'}"></i>
+          ${moduleCompleted ? 'Modul sudah diselesaikan' : 'Modul belum diselesaikan'}
+        </span>
+      </div>
+    </div>`;
   m.sections.forEach((s,i)=>{
     html += `<section id="${s.id}"><h3><span class="sx">${i+1}</span>${s.judul}</h3>${s.html}</section>`;
   });
@@ -242,12 +293,79 @@ function answerQuiz(mid, qi, oi){
 }
 
 /* ---------- Progress ---------- */
+function renderProgress(){
+  const totalModules = MODULES.length;
+  const completedCount = completed.size;
+  const percent = totalModules ? Math.round((completedCount / totalModules) * 100) : 0;
+
+  const badge = document.getElementById('progressBadge');
+  const progressText = document.getElementById('progressText');
+  const summaryText = document.getElementById('progressSummaryText');
+  const summaryPercent = document.getElementById('progressSummaryPercent');
+  const summaryBar = document.getElementById('progressSummaryBar');
+
+  if (badge) {
+    if (completedCount > 0) {
+      badge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden');
+    }
+  }
+
+  if (progressText) {
+    progressText.textContent = `${completedCount} / ${totalModules} modul`;
+  }
+
+  if (summaryText) {
+    summaryText.textContent = `${completedCount} dari ${totalModules} modul selesai`;
+  }
+
+  if (summaryPercent) {
+    summaryPercent.textContent = `${percent}%`;
+  }
+
+  if (summaryBar) {
+    summaryBar.style.width = `${percent}%`;
+  }
+}
+
 function markComplete(id){
   completed.add(id);
   document.querySelectorAll(`.modDone[data-done="${id}"]`).forEach(e=>e.classList.remove('invisible'));
-  const badge = document.getElementById('progressBadge');
-  badge.classList.remove('hidden');
-  document.getElementById('progressText').textContent = `${completed.size} / ${MODULES.length} modul`;
+  saveProgress();
+  renderProgress();
+}
+
+function showProgressNotice(message, tone = 'success'){
+  const notice = document.getElementById('progressNotice');
+  if (!notice) return;
+
+  notice.textContent = message;
+  notice.classList.remove('hidden', 'text-green-700', 'text-red-600', 'text-gray-600');
+  notice.classList.add(tone === 'danger' ? 'text-red-600' : 'text-green-700');
+
+  clearTimeout(showProgressNotice._timer);
+  showProgressNotice._timer = setTimeout(() => {
+    notice.classList.add('hidden');
+    notice.textContent = '';
+  }, 2200);
+}
+
+function resetProgress(){
+  const confirmed = window.confirm('Reset semua progres belajar dan mulai lagi dari awal?');
+  if (!confirmed) return;
+
+  completed.clear();
+  document.querySelectorAll('.modDone').forEach(e=>e.classList.add('invisible'));
+
+  try {
+    window.localStorage.removeItem(PROGRESS_STORAGE_KEY);
+  } catch (_) {
+    // Abaikan jika storage tidak tersedia.
+  }
+
+  renderProgress();
+  showProgressNotice('Progres berhasil direset. Anda dapat memulai pelatihan dari awal.');
 }
 
 /* ---------- Scroll spy ---------- */
@@ -285,7 +403,23 @@ document.getElementById('mobileBtn').addEventListener('click',()=>{
   document.getElementById('mobileMenu').classList.toggle('hidden');
 });
 
+document.getElementById('resetProgressBtn')?.addEventListener('click', resetProgress);
+
+function openModuleFromQuery(){
+  const params = new URLSearchParams(window.location.search);
+  const rawOpen = params.get('open');
+  if(rawOpen === null) return;
+
+  const moduleId = Number(rawOpen);
+  if(!Number.isInteger(moduleId) || moduleId < 0 || moduleId >= MODULES.length) return;
+
+  openModule(moduleId);
+}
+
 /* ---------- Init ---------- */
 buildHeroLayers();
+loadProgress();
 buildModuleGrid();
 observeReveals();
+renderProgress();
+openModuleFromQuery();
