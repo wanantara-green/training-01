@@ -763,6 +763,7 @@
         const toolBtns = document.querySelectorAll('.map-tool-btn');
         const toolNotif = document.getElementById('toolNotification');
         const toolNotifText = document.getElementById('toolNotifText');
+        const selectToolBtn = document.querySelector('.map-tool-btn[data-tool="select"]');
         const identifyToolBtn = document.querySelector('.map-tool-btn[data-tool="identify"]');
         const measureToolBtn = document.querySelector('.map-tool-btn[data-tool="measure"]');
 
@@ -778,7 +779,7 @@
         function updateMapCursor() {
             const mapEl = document.getElementById('map');
             if (!mapEl) return;
-            mapEl.style.cursor = (identifyMode || measureMode) ? 'crosshair' : '';
+            mapEl.style.cursor = (selectMode || identifyMode || measureMode) ? 'crosshair' : '';
         }
 
         toolBtns.forEach(btn => {
@@ -808,8 +809,32 @@
                     return;
                 }
 
+                // Toggle selection mode
+                if (tool === 'select') {
+                    identifyMode = false;
+                    measureMode = false;
+                    identifyToolBtn?.classList.remove('active');
+                    measureToolBtn?.classList.remove('active');
+                    clearMeasurement();
+                    selectMode = !selectMode;
+                    if (selectMode) {
+                        this.classList.add('active');
+                        updateMapCursor();
+                        showToolNotification('Mode Seleksi AKTIF - klik fitur di peta');
+                    } else {
+                        this.classList.remove('active');
+                        clearSelection();
+                        updateMapCursor();
+                        showToolNotification('Mode Seleksi NONAKTIF');
+                    }
+                    return;
+                }
+
                 // Toggle identify mode
                 if (tool === 'identify') {
+                    selectMode = false;
+                    clearSelection();
+                    selectToolBtn?.classList.remove('active');
                     measureMode = false;
                     clearMeasurement();
                     measureToolBtn?.classList.remove('active');
@@ -828,6 +853,9 @@
 
                 // Toggle measurement mode
                 if (tool === 'measure') {
+                    selectMode = false;
+                    clearSelection();
+                    selectToolBtn?.classList.remove('active');
                     identifyMode = false;
                     identifyToolBtn?.classList.remove('active');
                     measureMode = !measureMode;
@@ -1281,8 +1309,10 @@
         updateLegend();
 
         // ============ IDENTIFY / INFO POPUP ON CLICK ============
+        let selectMode = false;
         let identifyMode = true;
         let measureMode = false;
+        const selectionLayer = L.layerGroup().addTo(map);
         const measurementLayer = L.layerGroup().addTo(map);
         let measurementPoints = [];
         let measurementLine = null;
@@ -1297,6 +1327,10 @@
                 return `${(distanceMeters / 1000).toFixed(2)} km`;
             }
             return `${Math.round(distanceMeters)} m`;
+        }
+
+        function clearSelection() {
+            selectionLayer.clearLayers();
         }
 
         function clearMeasurement() {
@@ -1349,6 +1383,44 @@
                 .openOn(map);
 
             showToolNotification(`Jarak terukur: ${formatDistance(distance)}`);
+            return true;
+        }
+
+        function doSelect(e) {
+            if (!selectMode) return false;
+
+            const features = collectFeaturesAtPoint(e.latlng, 10);
+            clearSelection();
+
+            if (!features.length) {
+                showToolNotification('Tidak ada fitur untuk diseleksi');
+                return true;
+            }
+
+            features.forEach(featureHit => {
+                const featureLayer = L.geoJSON({
+                    type: 'Feature',
+                    geometry: featureHit.properties && featureHit.geometry ? featureHit.geometry : null,
+                    properties: featureHit.properties || {},
+                }, {
+                    style: {
+                        color: '#f59e0b',
+                        weight: 3,
+                        fillColor: '#fde68a',
+                        fillOpacity: 0.2,
+                    },
+                    pointToLayer: (_, latlng) => L.circleMarker(latlng, {
+                        radius: 7,
+                        color: '#f59e0b',
+                        weight: 3,
+                        fillColor: '#fde68a',
+                        fillOpacity: 0.7,
+                    }),
+                });
+                featureLayer.addTo(selectionLayer);
+            });
+
+            showToolNotification(`${features.length} fitur terseleksi`);
             return true;
         }
 
@@ -1414,6 +1486,7 @@
 
                     found.push({
                         layerKey: layerKey,
+                        geometry: entry.feature.geometry,
                         properties: entry.feature.properties || {},
                     });
                 }
@@ -1428,6 +1501,7 @@
         }
 
         function doIdentify(e) {
+            if (doSelect(e)) return;
             if (doMeasure(e)) return;
 
             // Hanya tampilkan popup saat mode Info Atribut aktif
@@ -1495,7 +1569,7 @@
         let hoverTimer = null;
 
         function resetHoverCursor() {
-            mapContainer.style.cursor = (identifyMode || measureMode) ? 'crosshair' : '';
+            mapContainer.style.cursor = (selectMode || identifyMode || measureMode) ? 'crosshair' : '';
         }
 
         function checkHover(e) {
@@ -1506,6 +1580,10 @@
 
         map.on('mousemove', function(e) {
             // Deteksi hover hanya saat mode Info Atribut aktif
+            if (selectMode) {
+                resetHoverCursor();
+                return;
+            }
             if (measureMode) {
                 resetHoverCursor();
                 return;
