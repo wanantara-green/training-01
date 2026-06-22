@@ -763,6 +763,7 @@
         const toolBtns = document.querySelectorAll('.map-tool-btn');
         const toolNotif = document.getElementById('toolNotification');
         const toolNotifText = document.getElementById('toolNotifText');
+        const identifyToolBtn = document.querySelector('.map-tool-btn[data-tool="identify"]');
 
         function showToolNotification(text) {
             toolNotifText.textContent = text;
@@ -1251,7 +1252,11 @@
         updateLegend();
 
         // ============ IDENTIFY / INFO POPUP ON CLICK ============
-        let identifyMode = false;
+        let identifyMode = true;
+        if (identifyToolBtn) {
+            identifyToolBtn.classList.add('active');
+            document.getElementById('map').style.cursor = 'crosshair';
+        }
 
         function getActiveLayerKeys() {
             return Object.keys(geoLayers)
