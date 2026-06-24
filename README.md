@@ -46,7 +46,7 @@ Untuk mereset seluruh progres belajar, klik tombol **Reset Progres** (merah) pad
 |---|---|
 | Reset Progres Belajar | **1234** |
 
-Fitur reset memungkinkan peserta berbeda dengan nama berbeda untuk menggunakan perangkat komputer yang sama dan memulai pelatihan dari awal.
+Fitur reset memungkinkan peserta lain memulai pelatihan dari awal pada perangkat yang sama.
 
 ### Cara Penggunaan
 
