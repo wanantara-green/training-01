@@ -27,7 +27,7 @@ HTML5, Tailwind CSS (CDN), MapLibre GL JS 3.6, Turf.js 6, Vanilla JavaScript. St
 
 ## PIN Kuis
 
-Setiap modul memiliki kuis yang dilindungi PIN. Peserta membuka section **Kuis** pada modul, lalu memasukkan PIN untuk mengakses pertanyaan. Kuis hanya bisa dibuka satu kali per sesi; setelah terbuka, tetap dapat diakses selama halaman tidak dimuat ulang.
+Setiap modul memiliki kuis yang dilindungi PIN. Peserta membuka section **Kuis** pada modul, lalu memasukkan PIN untuk mengakses pertanyaan. Kuis hanya bisa dibuka satu kali per sesi; setelah terbuka, tetap dapat diakses selama halaman tidak direset.
 
 | Modul | PIN |
 |---|---|
