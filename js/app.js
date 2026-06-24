@@ -5,10 +5,81 @@
 let currentModule = 0;
 const completed = new Set();
 const quizUnlocked = new Set();
+const quizShuffled = {};
+let RESET_PIN = '1234';
 const PROGRESS_STORAGE_KEY = 'training-01-modul-progress';
 const QUIZ_UNLOCK_KEY = 'training-01-quiz-unlocked';
 const QUIZ_ANSWER_KEY = 'training-01-quiz-answers';
+const SHUFFLED_QUIZ_KEY = 'training-01-quiz-shuffled';
 const USER_KEY = 'training-01-user';
+
+/* ---------- XML Loader ---------- */
+async function loadModulXML(){
+  try {
+    const res = await fetch('data/modul.xml');
+    if(!res.ok) throw new Error('Gagal memuat XML');
+    const text = await res.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'text/xml');
+    const root = doc.documentElement;
+    if(root.nodeName !== 'pelatihan') throw new Error('Format XML tidak dikenali');
+
+    // Parse reset-pin
+    const rp = root.getAttribute('reset-pin');
+    if(rp) RESET_PIN = rp;
+
+    // Parse INDIKATOR
+    const indikatorEls = root.querySelectorAll('indikator > kelompok');
+    INDIKATOR = Array.from(indikatorEls).map(g => ({
+      kode: g.getAttribute('kode'),
+      nama: g.getAttribute('nama'),
+      w: g.getAttribute('w'),
+      ikon: g.getAttribute('ikon'),
+      warna: g.getAttribute('warna'),
+      items: Array.from(g.querySelectorAll('item')).map(it => [
+        it.getAttribute('kode'),
+        it.getAttribute('nama'),
+        it.getAttribute('bobot')
+      ])
+    }));
+
+    // Parse KELAS5
+    const kelasEls = root.querySelectorAll('kelas5 > kelas');
+    KELAS5 = Array.from(kelasEls).map(k => [
+      k.getAttribute('nilai'),
+      k.getAttribute('nama'),
+      k.getAttribute('warna'),
+      k.getAttribute('deskripsi')
+    ]);
+
+    // Parse MODULES
+    const modulEls = root.querySelectorAll('modul');
+    MODULES = Array.from(modulEls).map(m => ({
+      id: Number(m.getAttribute('id')),
+      kode: m.getAttribute('kode'),
+      judul: m.getAttribute('judul'),
+      pin: m.getAttribute('pin'),
+      ikon: m.getAttribute('ikon'),
+      durasi: m.getAttribute('durasi'),
+      ringkas: m.getAttribute('ringkas'),
+      sections: Array.from(m.querySelectorAll(':scope > section')).map(s => ({
+        id: s.getAttribute('id'),
+        judul: s.getAttribute('judul'),
+        html: s.textContent.trim()
+      })),
+      quiz: Array.from(m.querySelectorAll('kuis > pertanyaan')).map(p => ({
+        q: p.getAttribute('q'),
+        opts: Array.from(p.querySelectorAll('opsi')).map(o => o.textContent.trim()),
+        a: Array.from(p.querySelectorAll('opsi')).findIndex(o => o.getAttribute('benar') === 'true')
+      }))
+    }));
+
+    return true;
+  } catch(err){
+    console.warn('XML tidak dapat dimuat, gunakan data cadangan:', err.message);
+    return false;
+  }
+}
 
 function getUser(){ try { return JSON.parse(localStorage.getItem(USER_KEY)); } catch(_) { return null; } }
 
@@ -32,6 +103,17 @@ function loadQuizAnswers(){
 }
 function saveQuizAnswers(){
   try { localStorage.setItem(QUIZ_ANSWER_KEY, JSON.stringify(window._quizState || {})); } catch(_){}
+}
+
+function loadShuffledQuiz(){
+  try {
+    const raw = localStorage.getItem(SHUFFLED_QUIZ_KEY);
+    if(!raw) return;
+    Object.assign(quizShuffled, JSON.parse(raw));
+  } catch(_){}
+}
+function saveShuffledQuiz(){
+  try { localStorage.setItem(SHUFFLED_QUIZ_KEY, JSON.stringify(quizShuffled)); } catch(_){}
 }
 
 function loadUserBadge(){
@@ -166,12 +248,14 @@ function isModuleAccessible(id){
 }
 
 function getModuleScore(id){
+  const quiz = quizShuffled[id];
   const m = MODULES[id];
-  if(!m.quiz || !m.quiz.length) return null;
+  const length = quiz ? quiz.length : m.quiz.length;
+  if(!length) return null;
   const state = (window._quizState || {})[id];
   if(!state || state.some(v=>v===null)) return null;
-  const correct = state.filter((v,i)=>v===m.quiz[i].a).length;
-  return `${correct}/${m.quiz.length}`;
+  const correct = state.filter((v,i)=>v===(quiz ? quiz[i].a : m.quiz[i].a)).length;
+  return `${correct}/${length}`;
 }
 
 function buildModuleGrid(){
@@ -344,10 +428,24 @@ function buildQuiz(m){
     <div id="quizItems"></div>
     <div id="quizResult" class="hidden mt-4 p-4 rounded-lg text-center"></div></div>`;
   const items = document.getElementById('quizItems');
-  const savedState = (window._quizState || {})[m.id];
-  const state = savedState ? savedState.slice() : m.quiz.map(()=>null);
 
-  items.innerHTML = m.quiz.map((q,qi)=>`
+  // Shuffle if not yet cached
+  if(!quizShuffled[m.id]){
+    const shuffled = m.quiz.map((q, origQi) => {
+      const indexed = q.opts.map((o, i) => ({ text: o, origI: i }));
+      for(let i = indexed.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [indexed[i], indexed[j]] = [indexed[j], indexed[i]]; }
+      return { q: q.q, opts: indexed.map(x => x.text), a: indexed.findIndex(x => x.origI === q.a), origQi };
+    });
+    for(let i = shuffled.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; }
+    quizShuffled[m.id] = shuffled;
+    saveShuffledQuiz();
+  }
+  const quiz = quizShuffled[m.id];
+
+  const savedState = (window._quizState || {})[m.id];
+  const state = savedState ? savedState.slice() : quiz.map(()=>null);
+
+  items.innerHTML = quiz.map((q,qi)=>`
     <div class="mb-5" data-q="${qi}">
       <div class="quiz-q"><span class="qn">${qi+1}.</span><span>${q.q}</span></div>
       ${q.opts.map((o,oi)=>`
@@ -362,21 +460,22 @@ function buildQuiz(m){
 
   // If quiz was already completed, show result
   if(state.every(v=>v!==null)){
-    const score = state.filter((v,i)=>v===m.quiz[i].a).length;
+    const score = state.filter((v,i)=>v===quiz[i].a).length;
     const res = document.getElementById('quizResult');
     res.classList.remove('hidden');
     res.style.background = '#f0fdf4'; res.style.border='1px solid #dcfce7';
     res.innerHTML = `<div class="text-green-800 font-semibold" style="font-family:Poppins">
-      <i class="fas fa-award"></i> Skor: ${score}/${m.quiz.length}</div>
+      <i class="fas fa-award"></i> Skor: ${score}/${quiz.length}</div>
       <div class="text-sm text-gray-600 mt-1">Modul sudah diselesaikan.</div>`;
-    }
+  }
 }
 
 function answerQuiz(mid, qi, oi){
-  const m = MODULES[mid];
-  const correct = m.quiz[qi].a;
+  const quiz = quizShuffled[mid];
+  if(!quiz) return;
+  const correct = quiz[qi].a;
   const state = window._quizState[mid];
-  if(state[qi]!==null) return; // already answered
+  if(state[qi]!==null) return;
   state[qi] = oi;
 
   const opts = document.querySelectorAll(`.quiz-opt[data-q="${qi}"]`);
@@ -393,12 +492,12 @@ function answerQuiz(mid, qi, oi){
 
   // check completion
   if(state.every(v=>v!==null)){
-    const score = state.filter((v,i)=>v===m.quiz[i].a).length;
+    const score = state.filter((v,i)=>v===quiz[i].a).length;
     const res = document.getElementById('quizResult');
     res.classList.remove('hidden');
     res.style.background = '#f0fdf4'; res.style.border='1px solid #dcfce7';
     res.innerHTML = `<div class="text-green-800 font-semibold" style="font-family:Poppins">
-      <i class="fas fa-award"></i> Skor: ${score}/${m.quiz.length}</div>
+      <i class="fas fa-award"></i> Skor: ${score}/${quiz.length}</div>
       <div class="text-sm text-gray-600 mt-1">Modul ditandai selesai. Lanjut ke modul berikutnya untuk meneruskan pembelajaran.</div>`;
     markComplete(mid);
     saveQuizAnswers();
@@ -500,7 +599,7 @@ function closeResetModal(){
 function confirmReset(){
   const input = document.getElementById('resetPinInput');
   const entered = (input?.value || '').trim();
-  if(entered !== '1234'){
+  if(entered !== RESET_PIN){
     const err = document.getElementById('resetPinError');
     if(err) err.classList.remove('hidden');
     if(input){ input.value = ''; input.focus(); }
@@ -511,9 +610,11 @@ function confirmReset(){
   document.querySelectorAll('.modDone').forEach(e=>e.classList.add('invisible'));
   try { window.localStorage.removeItem(PROGRESS_STORAGE_KEY); } catch (_) {}
   try { window.localStorage.removeItem(QUIZ_ANSWER_KEY); } catch (_) {}
+  try { window.localStorage.removeItem(SHUFFLED_QUIZ_KEY); } catch (_) {}
   try { window.localStorage.removeItem(USER_KEY); } catch (_) {}
   try { window.localStorage.removeItem(QUIZ_UNLOCK_KEY); } catch (_) {}
   quizUnlocked.clear();
+  Object.keys(quizShuffled).forEach(k => delete quizShuffled[k]);
   window._quizState = {};
 
   // Hide user badge
@@ -614,13 +715,18 @@ function buildReport(){
     final.classList.add('hidden');
   }
 }
-buildHeroLayers();
-loadProgress();
-loadQuizUnlocks();
-loadQuizAnswers();
-loadUserBadge();
-buildModuleGrid();
-buildReport();
-observeReveals();
-renderProgress();
-openModuleFromQuery();
+/* ---------- Init ---------- */
+(async function init(){
+  await loadModulXML();
+  buildHeroLayers();
+  loadProgress();
+  loadQuizUnlocks();
+  loadQuizAnswers();
+  loadShuffledQuiz();
+  loadUserBadge();
+  buildModuleGrid();
+  buildReport();
+  observeReveals();
+  renderProgress();
+  openModuleFromQuery();
+})();

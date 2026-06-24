@@ -5,7 +5,7 @@
    section: { id, judul, html }
    ===================================================================== */
 
-const INDIKATOR = [
+let INDIKATOR = [
   { kode:'X1', nama:'Kerentanan Fisik', w:'0.136', ikon:'fa-mountain', warna:'#b45309',
     items:[
       ['X1.1','Kemiringan Lereng','0.001'],['X1.2','Curah Hujan','0.037'],
@@ -43,7 +43,7 @@ const INDIKATOR = [
     ]}
 ];
 
-const KELAS5 = [
+let KELAS5 = [
   ['1','Sangat Rendah','#d73027','Zona dengan nilai gabungan terendah — prioritas perlindungan / pembatasan pemanfaatan'],
   ['2','Rendah','#fc8d59','Pemanfaatan terbatas dengan syarat ketat'],
   ['3','Sedang','#fee08b','Zona penyangga / transisi, perlu kajian tambahan'],
@@ -51,7 +51,7 @@ const KELAS5 = [
   ['5','Sangat Tinggi','#1a9850','Paling sesuai untuk intervensi / budidaya prioritas']
 ];
 
-const MODULES = [
+let MODULES = [
   /* ============ MODUL 0 — PENGANTAR ============ */
   {
     id:0, kode:'Modul 1', judul:'Konsep Dasar Perencanaan Zonasi Spasial & FOLUR', pin:'4827',

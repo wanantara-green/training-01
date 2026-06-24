@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pelatihan judul="Perencanaan Zonasi Spasial Kabupaten Luwu" reset-pin="1234">
+
+  <indikator>
+    <kelompok kode="X1" nama="Kerentanan Fisik" w="0.136" ikon="fa-mountain" warna="#b45309">
+      <item kode="X1.1" nama="Kemiringan Lereng" bobot="0.001"/>
+      <item kode="X1.2" nama="Curah Hujan" bobot="0.037"/>
+      <item kode="X1.3" nama="Rawan Bencana" bobot="0.051"/>
+      <item kode="X1.4" nama="Kenaikan Muka Laut" bobot="0.052"/>
+    </kelompok>
+    <kelompok kode="X2" nama="Kerentanan Sosial-Ekonomi" w="0.080" ikon="fa-people-group" warna="#0e7490">
+      <item kode="X2.1" nama="Kepadatan Penduduk" bobot="0.011"/>
+      <item kode="X2.2" nama="Penduduk Miskin" bobot="0.005"/>
+      <item kode="X2.3" nama="Rasio Ketergantungan" bobot="0.027"/>
+      <item kode="X2.4" nama="Akses Kesehatan" bobot="0.034"/>
+      <item kode="X2.5" nama="Diversifikasi Mata Pencaharian" bobot="0.008"/>
+    </kelompok>
+    <kelompok kode="X3" nama="Daya Dukung Lingkungan Hidup" w="0.258" ikon="fa-tree" warna="#15803d">
+      <item kode="X3.1" nama="Tutupan Vegetasi" bobot="0.080"/>
+      <item kode="X3.2" nama="Ketersediaan Air" bobot="0.103"/>
+      <item kode="X3.3" nama="Daya Tampung Lahan" bobot="0.022"/>
+      <item kode="X3.4" nama="Ruang Terbuka Hijau" bobot="0.017"/>
+      <item kode="X3.5" nama="Kualitas Air Sungai" bobot="0.074"/>
+    </kelompok>
+    <kelompok kode="X4" nama="Kesesuaian Lahan" w="0.138" ikon="fa-vector-square" warna="#4d7c0f">
+      <item kode="X4.1" nama="Kemampuan Lahan" bobot="0.020"/>
+      <item kode="X4.2" nama="Penggunaan Lahan Eksisting" bobot="0.005"/>
+      <item kode="X4.3" nama="Kedalaman Tanah" bobot="0.039"/>
+      <item kode="X4.4" nama="Infrastruktur &amp; Aksesibilitas" bobot="0.083"/>
+      <item kode="X4.5" nama="Jarak Pusat Kegiatan" bobot="0.005"/>
+    </kelompok>
+    <kelompok kode="X5" nama="Kapasitas Adaptasi" w="0.167" ikon="fa-people-carry-box" warna="#1d4ed8">
+      <item kode="X5.1" nama="Tingkat Pendidikan" bobot="0.028"/>
+      <item kode="X5.2" nama="Akses Informasi Spasial" bobot="0.027"/>
+      <item kode="X5.3" nama="Kelembagaan Lokal" bobot="0.076"/>
+      <item kode="X5.4" nama="Kapasitas Fiskal" bobot="0.002"/>
+      <item kode="X5.5" nama="Infrastruktur Mitigasi" bobot="0.065"/>
+    </kelompok>
+    <kelompok kode="X6" nama="Kesesuaian Komoditas FOLUR" w="0.120" ikon="fa-seedling" warna="#a16207">
+      <item kode="X6.1" nama="Kesesuaian Lahan Kakao" bobot="0.031"/>
+      <item kode="X6.2" nama="Kesesuaian Lahan Padi" bobot="0.008"/>
+      <item kode="X6.3" nama="Soil Fertility Index" bobot="0.025"/>
+      <item kode="X6.4" nama="Status Daya Dukung Lahan" bobot="0.047"/>
+      <item kode="X6.5" nama="Status Daya Dukung Air" bobot="0.011"/>
+      <item kode="X6.6" nama="Status NKT/SKT" bobot="0.008"/>
+    </kelompok>
+  </indikator>
+
+  <kelas5>
+    <kelas nilai="1" nama="Sangat Rendah" warna="#d73027" deskripsi="Zona dengan nilai gabungan terendah — prioritas perlindungan / pembatasan pemanfaatan"/>
+    <kelas nilai="2" nama="Rendah" warna="#fc8d59" deskripsi="Pemanfaatan terbatas dengan syarat ketat"/>
+    <kelas nilai="3" nama="Sedang" warna="#fee08b" deskripsi="Zona penyangga / transisi, perlu kajian tambahan"/>
+    <kelas nilai="4" nama="Tinggi" warna="#91cf60" deskripsi="Sesuai untuk pengembangan terkendali"/>
+    <kelas nilai="5" nama="Sangat Tinggi" warna="#1a9850" deskripsi="Paling sesuai untuk intervensi / budidaya prioritas"/>
+  </kelas5>
+
+  <!-- ════════════════════════════════════════════
+       MODUL 1 — Konsep Dasar
+       ════════════════════════════════════════════ -->
+  <modul id="0" kode="Modul 1" judul="Konsep Dasar Perencanaan Zonasi Spasial &amp; FOLUR" pin="4827" ikon="fa-book-open" durasi="15 menit" ringkas="Fondasi: apa itu zonasi spasial, mengapa penting, dan bagaimana FOLUR menjadi kerangkanya.">
+
+    <section id="s1" judul="Apa itu zonasi spasial?">
+      <![CDATA[
+        <p>Zonasi spasial adalah pembagian suatu wilayah menjadi <strong>zona-zona dengan arahan pemanfaatan yang berbeda</strong>, berdasarkan karakteristik fisik, lingkungan, sosial, dan ekonomi yang melekat pada ruang tersebut. Tujuannya memastikan setiap petak lahan digunakan sesuai daya dukung dan kerentanannya — bukan sekadar berdasarkan permintaan sesaat.</p>
+        <p>Di Kabupaten Luwu, zonasi disusun untuk menjawab satu pertanyaan praktis: <em>"Di mana sebaiknya kegiatan pertanian, restorasi, atau perlindungan dilakukan, dan dengan syarat apa?"</em> Jawabannya tidak ditebak, melainkan dihitung dari data spasial yang dapat ditelusuri.</p>
+      ]]>
+    </section>
+
+    <section id="s2" judul="Mengapa zonasi penting bagi pemerintah daerah">
+      <![CDATA[
+        <p>Zonasi yang baik menjadi dasar bagi:</p>
+        <ul>
+          <li><strong>Perizinan berusaha (KKPR)</strong> — menilai apakah lokasi yang diajukan sesuai peruntukan.</li>
+          <li><strong>Revisi RTRW</strong> — memberi basis teknis untuk penetapan pola ruang.</li>
+          <li><strong>Perlindungan lahan pangan (LP2B)</strong> — menjaga sawah produktif dari alih fungsi.</li>
+          <li><strong>Mitigasi bencana</strong> — mengarahkan pembangunan menjauh dari kawasan rawan.</li>
+        </ul>
+        <div class="callout"><i class="fas fa-lightbulb"></i> Tanpa zonasi berbasis data, keputusan ruang cenderung reaktif dan sulit dipertanggungjawabkan. Zonasi mengubahnya menjadi proses yang transparan dan dapat diaudit.</div>
+      ]]>
+    </section>
+
+    <section id="s3" judul="Kerangka FOLUR">
+      <![CDATA[
+        <p><strong>FOLUR</strong> (Food Systems, Land Use, and Restoration — Sistem Pangan, Tata Guna Lahan, dan Restorasi) adalah pendekatan yang menyeimbangkan tiga kepentingan yang sering bertabrakan: <strong>produksi pangan</strong>, <strong>kelestarian lingkungan</strong>, dan <strong>pemulihan lahan terdegradasi</strong>.</p>
+        <p>Dalam konteks Luwu, FOLUR memfokuskan zonasi pada lima komoditas prioritas — <strong>kakao, padi sawah, jagung, sagu, dan cengkeh</strong> — sambil memastikan pengembangannya tidak mengorbankan kawasan bernilai konservasi tinggi maupun memperparah risiko bencana.</p>
+      ]]>
+    </section>
+
+    <section id="s4" judul="Dasar hukum dan kebijakan">
+      <![CDATA[
+        <p>Zonasi spasial berpijak pada sejumlah landasan, antara lain:</p>
+        <ul class="list-disc ml-4">
+          <li>Undang-Undang Penataan Ruang dan turunannya (RTRW, RDTR, KKPR);</li>
+          <li>Ketentuan Daya Dukung &amp; Daya Tampung Lingkungan Hidup (DDDTLH);</li>
+          <li>Pedoman kesesuaian lahan pertanian (mis. Permentan terkait);</li>
+          <li>Kerangka kerentanan iklim (IPCC AR5) dan kebijakan kebencanaan (BNPB/InaRISK).</li>
+        </ul>
+        <p>Modul-modul berikutnya akan menerjemahkan landasan ini menjadi langkah analisis dan pembacaan peta yang konkret.</p>
+      ]]>
+    </section>
+
+    <kuis>
+      <pertanyaan q="Apa tujuan utama zonasi spasial?">
+        <opsi benar="false">Membagi wilayah secara administratif</opsi>
+        <opsi benar="true">Mengarahkan pemanfaatan ruang sesuai daya dukung dan kerentanannya</opsi>
+        <opsi benar="false">Menentukan batas desa</opsi>
+        <opsi benar="false">Menghitung jumlah penduduk</opsi>
+      </pertanyaan>
+      <pertanyaan q="Lima komoditas prioritas FOLUR di Luwu adalah?">
+        <opsi benar="true">Kakao, padi sawah, jagung, sagu, cengkeh</opsi>
+        <opsi benar="false">Padi, jagung, kedelai, tebu, kopi</opsi>
+        <opsi benar="false">Sawit, karet, kakao, lada, vanili</opsi>
+        <opsi benar="false">Sagu, sukun, pisang, kelapa, nilam</opsi>
+      </pertanyaan>
+    </kuis>
+  </modul>
+
+  <!-- ════════════════════════════════════════════
+       MODUL 2 — Metodologi MCE-GIS
+       ════════════════════════════════════════════ -->
+  <modul id="1" kode="Modul 2" judul="Metodologi Analisis Spasial (MCE-GIS)" pin="7391" ikon="fa-diagram-project" durasi="15 menit" ringkas="Bagaimana banyak indikator digabung menjadi satu peta zonasi melalui evaluasi multi-kriteria.">
+
+    <section id="s1" judul="Gambaran umum alur analisis">
+      <![CDATA[
+        <p>Inti penyusunan zonasi Luwu adalah <strong>MCE-GIS</strong> (Multi-Criteria Evaluation berbasis SIG): metode yang menggabungkan banyak lapisan indikator — masing-masing dengan bobot kepentingannya — menjadi satu peta keputusan.</p>
+        <p>Alurnya secara ringkas:</p>
+        <ol>
+          <li><strong>Identifikasi indikator</strong> — memilih variabel yang relevan (lereng, curah hujan, ketersediaan air, dll).</li>
+          <li><strong>Standardisasi</strong> — menyeragamkan setiap indikator ke skala kelas yang sebanding (1–5).</li>
+          <li><strong>Pembobotan</strong> — menetapkan bobot tiap indikator berdasarkan kepentingan relatifnya.</li>
+          <li><strong>Agregasi</strong> — menjumlahkan nilai berbobot menjadi indeks gabungan per lokasi.</li>
+          <li><strong>Klasifikasi</strong> — membagi indeks menjadi 5 kelas zonasi.</li>
+        </ol>
+      ]]>
+    </section>
+
+    <section id="s2" judul="Standardisasi: dari beragam satuan ke kelas 1–5">
+      <![CDATA[
+        <p>Indikator datang dalam satuan berbeda — derajat kemiringan, milimeter hujan, jumlah jiwa. Agar bisa dijumlahkan, semuanya diterjemahkan ke <strong>kelas numerik 1–5</strong> yang sebanding.</p>
+        <p>Contoh untuk <strong>kemiringan lereng</strong>:</p>
+        <table>
+          <thead><tr><th>Kelas</th><th>Lereng</th><th>Kategori</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>0–2%</td><td>Datar</td></tr>
+            <tr><td>2</td><td>2–5%</td><td>Landai</td></tr>
+            <tr><td>3</td><td>5–15%</td><td>Bergelombang</td></tr>
+            <tr><td>4</td><td>15–40%</td><td>Curam</td></tr>
+            <tr><td>5</td><td>&gt;40%</td><td>Sangat Curam</td></tr>
+          </tbody>
+        </table>
+        <p class="text-sm text-gray-500">Inilah atribut <code>kelas_numeric</code> dan <code>kategori</code> yang akan Anda temui saat mengklik fitur pada peta interaktif.</p>
+      ]]>
+    </section>
+
+    <section id="s3" judul="Pembobotan dan agregasi">
+      <![CDATA[
+        <p>Tidak semua indikator sama pentingnya. <strong>Bobot</strong> (weight) menyatakan seberapa besar pengaruh sebuah indikator terhadap hasil akhir. Bobot ini diperoleh melalui kombinasi penilaian pakar dan pemodelan statistik (PLS-SEM), lalu dinormalisasi.</p>
+        <p>Nilai akhir tiap lokasi dihitung sebagai <strong>jumlah berbobot</strong>:</p>
+        <div class="formula">Indeks = &Sigma; ( kelas_indikator<sub>i</sub> &times; bobot<sub>i</sub> )</div>
+        <p>Semakin tinggi bobot sebuah indikator, semakin besar kontribusinya menggeser zona ke kelas tertentu. Di Modul 3 Anda akan melihat bobot setiap indikator secara rinci.</p>
+        <div class="callout"><i class="fas fa-circle-info"></i> Jumlah seluruh bobot konstruk pada model ini adalah <strong>0,967</strong> — tidak tepat 1,000 karena pembulatan. Ini wajar dan tidak menandakan kesalahan.</div>
+      ]]>
+    </section>
+
+    <section id="s4" judul="Hukum minimum (limiting factor)">
+      <![CDATA[
+        <p>Khusus untuk penilaian <strong>kesesuaian lahan</strong>, berlaku <strong>hukum minimum</strong>: kelas kesesuaian sebuah satuan lahan ditentukan oleh <em>faktor pembatas terberat</em>, bukan rata-rata.</p>
+        <p>Analoginya seperti rantai — kekuatannya ditentukan mata rantai terlemah. Lahan dengan tanah subur namun lereng sangat curam tetap dinilai rendah, karena lereng menjadi pembatas dominan.</p>
+      ]]>
+    </section>
+
+    <section id="s5" judul="Anatomi Penilaian Zonasi (MCE-GIS)">
+      <![CDATA[
+        <p>Untuk menyatukan seluruh indikator spasial menjadi satu peta keputusan, kita menggunakan metode <strong>Anatomi Penilaian Zonasi</strong> berbasis <em>MCE-GIS</em>. Terdapat 29 indikator yang terbagi ke dalam 6 kelompok konstruk utama (X1 hingga X6), masing-masing dengan kontribusi pembobotan yang berbeda:</p>
+        <div class="my-6 max-w-lg mx-auto bg-white rounded-2xl shadow-md border border-gray-100 p-6">
+          <div class="flex items-center justify-between mb-4"><h4 class="font-semibold text-gray-800 text-sm flex items-center gap-2"><i class="fas fa-layer-group text-green-600"></i> Anatomi Penilaian Zonasi</h4><span class="text-[11px] text-gray-400 font-medium">MCE-GIS</span></div>
+          <div class="space-y-4">
+            <div><div class="flex items-center justify-between text-xs font-semibold mb-1"><span class="text-orange-850">X1 &middot; Kerentanan Fisik</span><span class="font-mono text-gray-500">0.136</span></div><div class="h-2 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-amber-700 rounded-full" style="width:46%"></div></div></div>
+            <div><div class="flex items-center justify-between text-xs font-semibold mb-1"><span class="text-teal-850">X2 &middot; Kerentanan Sosial-Ekonomi</span><span class="font-mono text-gray-500">0.080</span></div><div class="h-2 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-cyan-700 rounded-full" style="width:27%"></div></div></div>
+            <div><div class="flex items-center justify-between text-xs font-semibold mb-1"><span class="text-green-850">X3 &middot; Daya Dukung Lingkungan Hidup</span><span class="font-mono text-gray-500">0.258</span></div><div class="h-2 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-green-700 rounded-full" style="width:87%"></div></div></div>
+            <div><div class="flex items-center justify-between text-xs font-semibold mb-1"><span class="text-lime-850">X4 &middot; Kesesuaian Lahan</span><span class="font-mono text-gray-500">0.138</span></div><div class="h-2 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-lime-700 rounded-full" style="width:47%"></div></div></div>
+            <div><div class="flex items-center justify-between text-xs font-semibold mb-1"><span class="text-blue-850">X5 &middot; Kapasitas Adaptasi</span><span class="font-mono text-gray-500">0.167</span></div><div class="h-2 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-blue-600 rounded-full" style="width:56%"></div></div></div>
+            <div><div class="flex items-center justify-between text-xs font-semibold mb-1"><span class="text-yellow-900">X6 &middot; Kesesuaian Komoditas FOLUR</span><span class="font-mono text-gray-500">0.120</span></div><div class="h-2 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-stone-600 rounded-full" style="width:41%"></div></div></div>
+          </div>
+          <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-xs"><span class="text-gray-500">Hasil akhir</span><span class="font-semibold text-green-800 flex items-center gap-1.5"><i class="fas fa-vector-square"></i> Peta Zonasi 5 Kelas</span></div>
+        </div>
+        <p>Setiap kelompok konstruk berkontribusi secara proporsional. Struktur dan bobot ini mengontrol bagaimana kriteria digabungkan dan bagaimana satu faktor dapat bertindak sebagai pembatas utama kesesuaian wilayah.</p>
+      ]]>
+    </section>
+
+    <kuis>
+      <pertanyaan q="Mengapa setiap indikator distandardisasi ke kelas 1–5?">
+        <opsi benar="false">Agar terlihat rapi</opsi>
+        <opsi benar="true">Agar indikator dengan satuan berbeda dapat dijumlahkan secara sebanding</opsi>
+        <opsi benar="false">Untuk mengurangi jumlah data</opsi>
+        <opsi benar="false">Karena diwajibkan undang-undang</opsi>
+      </pertanyaan>
+      <pertanyaan q="Menurut hukum minimum, kelas kesesuaian lahan ditentukan oleh?">
+        <opsi benar="false">Rata-rata semua faktor</opsi>
+        <opsi benar="false">Faktor dengan nilai tertinggi</opsi>
+        <opsi benar="true">Faktor pembatas terberat</opsi>
+        <opsi benar="false">Luas lahan</opsi>
+      </pertanyaan>
+    </kuis>
+  </modul>
+
+  <!-- ════════════════════════════════════════════
+       MODUL 3 — Enam Indikator X1–X6
+       ════════════════════════════════════════════ -->
+  <modul id="2" kode="Modul 3" judul="Enam Kelompok Indikator Spasial (X1–X6)" pin="1563" ikon="fa-layer-group" durasi="15 menit" ringkas="Mengenal 29 indikator dalam 6 kelompok beserta bobotnya — fondasi seluruh peta zonasi.">
+
+    <section id="s1" judul="Struktur penilaian">
+      <![CDATA[
+        <p>Seluruh penilaian zonasi Luwu dibangun dari <strong>29 indikator</strong> yang dikelompokkan menjadi <strong>6 konstruk</strong> (X1–X6). Tiap konstruk mewakili satu dimensi penilaian, dan tiap indikator membawa bobotnya sendiri.</p>
+        <p>Gunakan peta interaktif untuk melihat wujud spasial tiap indikator. Di bawah ini, jelajahi keenam kelompoknya — klik untuk membuka rincian indikator dan bobot.</p>
+        <div id="indikatorAccordion" class="indik-acc"></div>
+      ]]>
+    </section>
+
+    <section id="s2" judul="Membaca bobot">
+      <![CDATA[
+        <p>Bobot menunjukkan <strong>seberapa kuat sebuah indikator menggeser hasil</strong>. Perhatikan beberapa yang menonjol:</p>
+        <ul>
+          <li><strong>Ketersediaan Air (X3.2 — 0,103)</strong>: bobot indikator tunggal tertinggi. Air adalah penentu utama kesesuaian di Luwu.</li>
+          <li><strong>Infrastruktur &amp; Aksesibilitas (X4.4 — 0,083)</strong>: keterjangkauan lokasi sangat menentukan kelayakan pengembangan.</li>
+          <li><strong>Tutupan Vegetasi (X3.1 — 0,080)</strong> dan <strong>Kelembagaan Lokal (X5.3 — 0,076)</strong>: lingkungan dan tata kelola berbobot besar.</li>
+        </ul>
+        <p>Di tingkat konstruk, <strong>Daya Dukung Lingkungan Hidup (X3 — 0,258)</strong> adalah yang paling berpengaruh, diikuti <strong>Kapasitas Adaptasi (X5 — 0,167)</strong>.</p>
+      ]]>
+    </section>
+
+    <section id="s3" judul="Kerangka kerentanan iklim (IPCC AR5)">
+      <![CDATA[
+        <p>Pengelompokan X1–X5 selaras dengan kerangka kerentanan iklim <strong>IPCC AR5</strong>, yang memandang risiko sebagai interaksi antara:</p>
+        <ul>
+          <li><strong>Keterpaparan &amp; sensitivitas</strong> — diwakili Kerentanan Fisik (X1) dan Sosial-Ekonomi (X2);</li>
+          <li><strong>Kondisi lingkungan pendukung</strong> — Daya Dukung LH (X3) dan Kesesuaian Lahan (X4);</li>
+          <li><strong>Kapasitas adaptasi</strong> — kemampuan masyarakat &amp; kelembagaan merespons (X5).</li>
+        </ul>
+        <p>Konstruk X6 menambahkan lapisan khusus FOLUR: kesesuaian komoditas dan status daya dukung lahan/air serta nilai konservasi (NKT/SKT).</p>
+      ]]>
+    </section>
+
+    <kuis>
+      <pertanyaan q="Konstruk mana yang memiliki bobot tertinggi di tingkat kelompok?">
+        <opsi benar="false">X1 Kerentanan Fisik</opsi>
+        <opsi benar="true">X3 Daya Dukung Lingkungan Hidup</opsi>
+        <opsi benar="false">X2 Kerentanan Sosial-Ekonomi</opsi>
+        <opsi benar="false">X6 Kesesuaian Komoditas FOLUR</opsi>
+      </pertanyaan>
+      <pertanyaan q="Indikator tunggal dengan bobot tertinggi adalah?">
+        <opsi benar="false">Kemiringan Lereng</opsi>
+        <opsi benar="false">Kepadatan Penduduk</opsi>
+        <opsi benar="true">Ketersediaan Air</opsi>
+        <opsi benar="false">Kapasitas Fiskal</opsi>
+      </pertanyaan>
+    </kuis>
+  </modul>
+
+  <!-- ════════════════════════════════════════════
+       MODUL 4 — Membaca Peta
+       ════════════════════════════════════════════ -->
+  <modul id="3" kode="Modul 4" judul="Membaca &amp; Menggunakan Peta Zonasi" pin="9045" ikon="fa-map-location-dot" durasi="15 menit" ringkas="Praktik: simbologi, legenda, klasifikasi 5 kelas, dan interpretasi zona pada peta interaktif.">
+
+    <section id="s1" judul="Anatomi peta zonasi">
+      <![CDATA[
+        <p>Peta zonasi terdiri dari beberapa komponen yang perlu dibaca bersama: <strong>layer indikator</strong>, <strong>legenda</strong> (skema warna tiap kelas), <strong>peta dasar</strong>, dan <strong>info atribut</strong> yang muncul saat sebuah fitur diklik.</p>
+        <p>Setiap poligon pada peta membawa atribut seperti <code>kategori</code>, <code>kelas_numeric</code>, <code>bobot</code>, dan <code>luas</code> (dalam hektar). Inilah data yang menjelaskan "mengapa" sebuah lokasi masuk kelas tertentu.</p>
+      ]]>
+    </section>
+
+    <section id="s2" judul="Klasifikasi lima kelas">
+      <![CDATA[
+        <p>Hasil akhir zonasi dibagi menjadi <strong>5 kelas</strong>, dari nilai gabungan terendah hingga tertinggi:</p>
+        <div id="kelasLegend" class="kelas-grid"></div>
+        <p class="text-sm text-gray-500 mt-3">Perhatikan: makna "tinggi" bergantung pada konteks layer. Pada layer kesesuaian, kelas 5 berarti paling sesuai; pada layer kerentanan/rawan bencana, nilai tinggi justru menandakan risiko yang perlu diwaspadai. Selalu baca judul layer dan legendanya.</p>
+      ]]>
+    </section>
+
+    <section id="s3" judul="Langkah praktik membaca peta">
+      <![CDATA[
+        <ol>
+          <li><strong>Aktifkan layer</strong> yang ingin ditelaah dari panel Layer.</li>
+          <li><strong>Buka legenda</strong> untuk memahami arti tiap warna.</li>
+          <li><strong>Klik sebuah fitur</strong> (mode Info Atribut) untuk melihat kelas dan nilainya.</li>
+          <li><strong>Bandingkan beberapa layer</strong> — misalnya kesesuaian kakao vs rawan bencana — untuk menilai trade-off.</li>
+          <li><strong>Catat zona prioritas</strong> berdasarkan tujuan: budidaya, penyangga, atau perlindungan.</li>
+        </ol>
+        <div class="callout"><i class="fas fa-triangle-exclamation"></i> Selisih luas antara total klasifikasi 5 kelas dan total bab zonasi dapat terjadi karena adanya sub-zona (sempadan, cagar budaya) yang tumpang tindih secara spasial dengan zona penyangga. Ini bukan kesalahan perhitungan.</div>
+      ]]>
+    </section>
+
+    <section id="s4" judul="Desa prioritas intervensi">
+      <![CDATA[
+        <p>Fokus intervensi FOLUR diarahkan pada <strong>12 desa prioritas</strong>. Saat membaca peta, perhatikan bagaimana kelas zonasi pada desa-desa ini menentukan jenis kegiatan yang dianjurkan — apakah pengembangan komoditas, restorasi, atau pembatasan karena risiko.</p>
+        <p>Dua kecamatan dengan perhatian khusus pada kawasan rawan bencana (KRB) adalah <strong>Walenrang Barat</strong> dan <strong>Latimojong</strong>, dengan luas gabungan sekitar 26.470 ha.</p>
+      ]]>
+    </section>
+
+    <kuis>
+      <pertanyaan q="Saat mengklik fitur peta, atribut mana yang menjelaskan kelas suatu lokasi?">
+        <opsi benar="false">Hanya nama desa</opsi>
+        <opsi benar="true">kelas_numeric dan kategori</opsi>
+        <opsi benar="false">Koordinat saja</opsi>
+        <opsi benar="false">Tanggal pembuatan</opsi>
+      </pertanyaan>
+      <pertanyaan q="Selisih luas antara klasifikasi 5 kelas dan total zonasi terutama disebabkan oleh?">
+        <opsi benar="false">Kesalahan input data</opsi>
+        <opsi benar="true">Sub-zona yang tumpang tindih dengan zona penyangga</opsi>
+        <opsi benar="false">Perbedaan proyeksi peta</opsi>
+        <opsi benar="false">Pembulatan luas</opsi>
+      </pertanyaan>
+    </kuis>
+  </modul>
+
+  <!-- ════════════════════════════════════════════
+       MODUL 5 — Peraturan & Perizinan
+       ════════════════════════════════════════════ -->
+  <modul id="4" kode="Modul 5" judul="Penerapan Zonasi dalam Peraturan &amp; Perizinan" pin="6182" ikon="fa-gavel" durasi="15 menit" ringkas="Menerjemahkan zona menjadi ketentuan kegiatan, dan kaitannya dengan KKPR serta revisi RTRW.">
+
+    <section id="s1" judul="Dari peta ke aturan">
+      <![CDATA[
+        <p>Peta zonasi hanya bermakna jika diterjemahkan menjadi <strong>ketentuan yang mengikat</strong>. Setiap zona memerlukan rumusan: kegiatan apa yang <strong>diperbolehkan</strong>, <strong>diperbolehkan bersyarat/terbatas</strong>, dan <strong>dilarang</strong>.</p>
+        <table>
+          <thead><tr><th>Arahan zona</th><th>Contoh ketentuan kegiatan</th></tr></thead>
+          <tbody>
+            <tr><td>Zona budidaya prioritas</td><td>Pengembangan komoditas FOLUR diperbolehkan dengan praktik berkelanjutan</td></tr>
+            <tr><td>Zona penyangga</td><td>Kegiatan terbatas; wajib kajian dampak lingkungan</td></tr>
+            <tr><td>Zona perlindungan</td><td>Pembangunan dilarang; diarahkan untuk konservasi/restorasi</td></tr>
+            <tr><td>Sempadan / cagar budaya</td><td>Mengikuti ketentuan khusus yang berlaku</td></tr>
+          </tbody>
+        </table>
+      ]]>
+    </section>
+
+    <section id="s2" judul="Kaitan dengan KKPR">
+      <![CDATA[
+        <p><strong>KKPR</strong> (Kesesuaian Kegiatan Pemanfaatan Ruang) adalah gerbang perizinan berusaha. Zonasi memberi dasar teknis untuk menilai permohonan: jika lokasi yang diajukan berada pada zona yang tidak sesuai peruntukan, permohonan dapat ditolak atau diberi syarat.</p>
+        <p>Alur sederhananya: <em>permohonan &rarr; cek lokasi terhadap peta zonasi &rarr; tentukan kesesuaian &rarr; terbitkan rekomendasi (sesuai / bersyarat / tidak sesuai)</em>.</p>
+      ]]>
+    </section>
+
+    <section id="s3" judul="Mendukung revisi RTRW">
+      <![CDATA[
+        <p>Hasil zonasi menjadi masukan teknis bagi <strong>revisi RTRW</strong>, khususnya dalam penetapan pola ruang. Karena disusun dari data yang dapat ditelusuri, zonasi memperkuat argumentasi penetapan kawasan lindung, kawasan budidaya, dan lahan pangan berkelanjutan (LP2B).</p>
+        <div class="callout"><i class="fas fa-scale-balanced"></i> Catatan: angka luas zona yang rinci hanya dirujuk dari bagian penetapan resmi (Bab 5 laporan), sementara bagian lain berfungsi sebagai pratinjau spasial. Konsistensi rujukan ini penting saat dokumen masuk proses legal.</div>
+      ]]>
+    </section>
+
+    <kuis>
+      <pertanyaan q="Apa fungsi KKPR dalam kaitannya dengan zonasi?">
+        <opsi benar="false">Menghitung pajak lahan</opsi>
+        <opsi benar="true">Menilai kesesuaian lokasi kegiatan terhadap peruntukan ruang</opsi>
+        <opsi benar="false">Menetapkan harga tanah</opsi>
+        <opsi benar="false">Membuat peta dasar</opsi>
+      </pertanyaan>
+      <pertanyaan q="Tiga kategori ketentuan kegiatan dalam zonasi adalah?">
+        <opsi benar="false">Murah, sedang, mahal</opsi>
+        <opsi benar="true">Diperbolehkan, terbatas/bersyarat, dilarang</opsi>
+        <opsi benar="false">Pagi, siang, malam</opsi>
+        <opsi benar="false">Desa, kecamatan, kabupaten</opsi>
+      </pertanyaan>
+    </kuis>
+  </modul>
+
+  <!-- ════════════════════════════════════════════
+       MODUL 6 — Monitoring & Evaluasi
+       ════════════════════════════════════════════ -->
+  <modul id="5" kode="Modul 6" judul="Pemantauan &amp; Evaluasi Zonasi" pin="2750" ikon="fa-chart-line" durasi="15 menit" ringkas="Konsep alat bantu keputusan, indikator kepatuhan, dan pemutakhiran data berbasis InaRISK/BPBD.">
+
+    <section id="s1" judul="Mengapa pemantauan diperlukan">
+      <![CDATA[
+        <p>Zonasi bukan dokumen sekali jadi. Kondisi lapangan berubah — tutupan lahan bergeser, infrastruktur bertambah, risiko bencana berevolusi. <strong>Pemantauan dan evaluasi (M&amp;E)</strong> menjaga agar zonasi tetap relevan dan ditaati.</p>
+      ]]>
+    </section>
+
+    <section id="s2" judul="Konsep alat bantu pengambilan keputusan">
+      <![CDATA[
+        <p>Alat bantu (decision support tool) yang dirancang berfungsi memantau:</p>
+        <ul>
+          <li><strong>Kepatuhan zonasi</strong> — apakah pemanfaatan ruang sesuai arahan zona;</li>
+          <li><strong>Perubahan tutupan/penggunaan lahan</strong> dari waktu ke waktu;</li>
+          <li><strong>Perkembangan risiko bencana</strong> dengan merujuk data <strong>InaRISK/BPBD</strong>.</li>
+        </ul>
+        <p>Secara konseptual, alat ini menyajikan indikator kunci dalam bentuk ringkas (dashboard) sehingga pengambil keputusan dapat menindaklanjuti penyimpangan secara cepat.</p>
+      ]]>
+    </section>
+
+    <section id="s3" judul="Pemutakhiran data dan siklus evaluasi">
+      <![CDATA[
+        <p>Indikator kebencanaan (E3) kini merujuk pada <strong>peta rawan bencana BPBD/InaRISK</strong>, bukan sekadar frekuensi kejadian. Layer ini perlu diperbarui berkala agar penilaian tetap mencerminkan kondisi terkini.</p>
+        <p>Siklus evaluasi yang sehat: <em>kumpulkan data terbaru &rarr; bandingkan dengan zonasi &rarr; identifikasi penyimpangan &rarr; rekomendasi tindak lanjut &rarr; perbarui zonasi bila perlu</em>.</p>
+        <div class="callout"><i class="fas fa-rotate"></i> Luwu tergolong risiko tinggi untuk banjir, banjir bandang, cuaca ekstrem, dan tanah longsor. Karena itu, pemutakhiran layer kebencanaan menjadi bagian rutin yang tidak bisa diabaikan.</div>
+      ]]>
+    </section>
+
+    <kuis>
+      <pertanyaan q="Indikator kebencanaan (E3) kini merujuk pada?">
+        <opsi benar="false">Frekuensi kejadian saja</opsi>
+        <opsi benar="true">Peta rawan bencana BPBD/InaRISK</opsi>
+        <opsi benar="false">Perkiraan warga</opsi>
+        <opsi benar="false">Data curah hujan tahunan</opsi>
+      </pertanyaan>
+      <pertanyaan q="Mengapa zonasi perlu dipantau dan dievaluasi berkala?">
+        <opsi benar="false">Agar dokumen terlihat baru</opsi>
+        <opsi benar="true">Karena kondisi lapangan dan risiko berubah dari waktu ke waktu</opsi>
+        <opsi benar="false">Untuk menambah jumlah halaman laporan</opsi>
+        <opsi benar="false">Karena diminta vendor</opsi>
+      </pertanyaan>
+    </kuis>
+  </modul>
+
+</pelatihan>
