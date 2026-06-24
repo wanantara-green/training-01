@@ -2,6 +2,7 @@
 <html lang="id">
 <head>
 	<meta charset="UTF-8">
+	<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%2322823f'/><path d='M16 5c-3 1-5 4-5 8 0 6 5 13 5 13s5-7 5-13c0-4-2-7-5-8z' fill='white' opacity='.95'/></svg>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Beranda Pelatihan — Zonasi Spasial Kabupaten Luwu</title>
 	<script src="https://cdn.tailwindcss.com"></script>
@@ -28,6 +29,9 @@
 			radial-gradient(circle at 80% 70%, rgba(30,107,59,.12), transparent 45%); }
 
 		.mark { background: linear-gradient(transparent 60%, var(--green-100) 60%); }
+
+		.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+		.reveal.visible { opacity: 1; transform: none; }
 	</style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -48,8 +52,9 @@
 
 				<nav class="hidden md:flex items-center gap-6 text-sm font-medium">
 					<a href="index.html" class="text-green-700 border-b-2 border-green-600 pb-1">Beranda</a>
-					<a href="modul.html#daftar-modul" class="text-gray-700 hover:text-green-700">Daftar Modul</a>
-					<a href="map.html" class="text-gray-700 hover:text-green-700">Peta Interaktif</a>
+					<a href="#alur-belajar" class="text-gray-700 hover:text-green-700">Alur Belajar</a>
+					<a href="#peserta" class="text-gray-700 hover:text-green-700">Peserta Pelatihan</a>
+					<a href="#tentang" class="text-gray-700 hover:text-green-700">Tentang</a>
 				</nav>
 
 				<button id="mobileBtn" class="md:hidden text-gray-700" aria-label="Buka menu navigasi">
@@ -58,8 +63,9 @@
 			</div>
 			<div id="mobileMenu" class="hidden md:hidden pb-4 space-y-1">
 				<a href="index.html" class="block rounded-lg bg-green-50 border border-green-200 px-3 py-2 text-green-700 font-medium text-sm">Beranda</a>
-				<a href="modul.html#daftar-modul" class="block py-2 text-gray-700 text-sm">Daftar Modul</a>
-				<a href="map.html" class="block py-2 text-gray-700 text-sm">Peta Interaktif</a>
+				<a href="#alur-belajar" class="block py-2 text-gray-700 text-sm">Alur Belajar</a>
+				<a href="#peserta" class="block py-2 text-gray-700 text-sm">Peserta Pelatihan</a>
+				<a href="#tentang" class="block py-2 text-gray-700 text-sm">Tentang</a>
 			</div>
 		</div>
 	</header>
@@ -81,14 +87,7 @@
 					</p>
 
 					<div class="mt-8">
-						<a href="modul.html?open=0"
-						   class="inline-flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white font-semibold px-7 py-3.5 rounded-xl shadow-lg shadow-green-900/15 transition"
-						   style="background:linear-gradient(135deg,var(--green-700),var(--green-800));">
-							<i class="fas fa-play-circle"></i> Mulai dari Modul 1
-						</a>
-						<p class="text-sm text-gray-500 mt-3">Mulai dari pengantar jika peserta baru pertama kali mengikuti pelatihan ini.</p>
-
-						<div class="flex flex-wrap gap-3 mt-4">
+						<div class="flex flex-wrap gap-3">
 							<a href="modul.html#daftar-modul"
 							   class="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-green-800 font-medium px-6 py-3 rounded-lg border border-green-200 transition">
 								Masuk ke Daftar Modul <i class="fas fa-arrow-right"></i>
@@ -123,7 +122,7 @@
 		</section>
 	</main>
 
-	<section class="bg-white border-t border-gray-200">
+	<section id="alur-belajar" class="bg-white border-t border-gray-200">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 			<div class="max-w-3xl">
 				<span class="text-xs font-semibold tracking-wide uppercase text-green-700">Alur Belajar</span>
@@ -166,7 +165,7 @@
 		</div>
 	</section>
 
-	<section class="bg-[#f4f7f1] border-t border-gray-200">
+	<section id="peserta" class="bg-[#f4f7f1] border-t border-gray-200">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 			<div class="grid lg:grid-cols-[.95fr_1.05fr] gap-10 items-start">
 				<div>
@@ -216,6 +215,67 @@
 		</div>
 	</section>
 
+	<section id="tentang" class="bg-white border-t border-gray-200">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+			<div class="reveal max-w-3xl mb-10">
+				<span class="text-xs font-semibold tracking-wide uppercase text-green-700">Tentang Pelatihan</span>
+				<h3 class="text-2xl sm:text-3xl font-bold mt-2" style="color:var(--green-900)">Materi disusun untuk mendukung pembelajaran terarah dan penerapan langsung</h3>
+				<p class="prose-body text-gray-600 mt-4 leading-relaxed">
+					Paket modul ini dikembangkan sebagai bagian dari penguatan kapasitas zonasi spasial Kabupaten Luwu,
+					dengan menggabungkan pendekatan FOLUR, evaluasi multi-kriteria, dan pembacaan peta interaktif
+					agar materi tidak berhenti di konsep, tetapi dapat langsung dipakai dalam kerja teknis dan pengambilan keputusan.
+				</p>
+			</div>
+
+			<div class="grid lg:grid-cols-[1.1fr_.95fr_.95fr] gap-6">
+				<div class="reveal bg-gradient-to-br from-green-50 to-white border border-green-100 rounded-2xl p-6 shadow-sm">
+					<div class="w-12 h-12 rounded-xl bg-green-700 text-white flex items-center justify-center mb-4">
+						<i class="fas fa-seedling"></i>
+					</div>
+					<h4 class="text-xl font-bold" style="color:var(--green-900)">Tentang Modul Ini</h4>
+					<p class="prose-body text-gray-600 mt-4 leading-relaxed">
+						Materi menghubungkan konsep penataan ruang, indikator kerentanan, daya dukung lingkungan hidup,
+						kesesuaian lahan, kapasitas adaptasi, dan pembacaan hasil zonasi ke dalam alur belajar yang runtut.
+					</p>
+					<div class="grid grid-cols-3 gap-3 mt-6">
+						<div class="rounded-xl bg-white border border-green-100 px-3 py-3 text-center">
+							<div class="text-lg font-bold text-green-800">6</div>
+							<div class="text-[11px] text-gray-500 uppercase tracking-wide">Modul</div>
+						</div>
+						<div class="rounded-xl bg-white border border-green-100 px-3 py-3 text-center">
+							<div class="text-lg font-bold text-green-800">29</div>
+							<div class="text-[11px] text-gray-500 uppercase tracking-wide">Indikator</div>
+						</div>
+						<div class="rounded-xl bg-white border border-green-100 px-3 py-3 text-center">
+							<div class="text-lg font-bold text-green-800">1</div>
+							<div class="text-[11px] text-gray-500 uppercase tracking-wide">Peta</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="reveal bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+					<h4 class="font-semibold text-gray-800 mb-4 flex items-center gap-2"><i class="fas fa-users text-green-600"></i> Sasaran Peserta</h4>
+					<ul class="prose-body space-y-3 text-gray-600 text-sm leading-relaxed">
+						<li>Perangkat daerah: Bappeda, PUPR, DLH, DPMPTSP, BPBD</li>
+						<li>Pemerintah kecamatan dan desa</li>
+						<li>Penyuluh dan pendamping lapangan</li>
+						<li>Mitra pembangunan dan akademisi</li>
+					</ul>
+				</div>
+
+				<div class="reveal bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+					<h4 class="font-semibold text-gray-800 mb-4 flex items-center gap-2"><i class="fas fa-bullseye text-green-600"></i> Capaian Pembelajaran</h4>
+					<ul class="prose-body space-y-3 text-gray-600 text-sm leading-relaxed">
+						<li>Memahami konsep dan dasar hukum zonasi</li>
+						<li>Membaca peta dan indikator pembobotan</li>
+						<li>Menafsirkan kelas kesesuaian dan risiko</li>
+						<li>Menerapkan zonasi dalam perizinan dan M&amp;E</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
 	<footer class="bg-gray-900 text-gray-400 py-8">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
 			<div class="flex items-center gap-3">
@@ -233,6 +293,11 @@
 		document.getElementById('mobileBtn')?.addEventListener('click', () => {
 			document.getElementById('mobileMenu')?.classList.toggle('hidden');
 		});
+
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('visible'); observer.unobserve(en.target); } });
+		}, { threshold: .12 });
+		document.querySelectorAll('.reveal:not(.visible)').forEach(el => observer.observe(el));
 	</script>
 </body>
 </html>
