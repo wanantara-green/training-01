@@ -31,7 +31,7 @@ Setiap modul memiliki kuis yang dilindungi PIN. Peserta membuka section **Kuis**
 |---|---|
 | Modul 1 — Konsep Dasar Zonasi Spasial & FOLUR | **4827** |
 | Modul 2 — Metodologi Analisis Spasial (MCE-GIS) | **7391** |
-| Modul 3 — Enam Kelompok Indikator Spasial (X1–X6) | **1563** |
+| Modul 3 — Enam Kelompok Indikator Spasial | **1563** |
 | Modul 4 — Membaca & Menggunakan Peta Zonasi | **9045** |
 | Modul 5 — Penerapan Zonasi dalam Peraturan & Perizinan | **6182** |
 | Modul 6 — Pemantauan & Evaluasi Zonasi | **2750** |
