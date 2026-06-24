@@ -46,6 +46,8 @@ Untuk mereset seluruh progres belajar, klik tombol **Reset Progres** (merah) pad
 |---|---|
 | Reset Progres Belajar | **1234** |
 
+Fitur reset memungkinkan peserta berbeda dengan nama berbeda untuk menggunakan perangkat komputer yang sama dan memulai pelatihan dari awal.
+
 ### Cara Penggunaan
 
 1. **Membuka kuis**: Buka modul yang diinginkan, scroll ke section **Kuis**, masukkan PIN modul terkait, klik **Buka Kuis**.
