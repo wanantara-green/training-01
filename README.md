@@ -1,8 +1,8 @@
-# Pelatihan Zonasi Spasial Kabupaten Luwu
+# Pelatihan Perencanaan Zonasi Spasial Kabupaten Luwu
 
 > Training online ini dipublikasikan di **[training-01.wanantara.org](https://training-01.wanantara.org)**
 
-Website pelatihan penguatan kapasitas **Zonasi Spasial** untuk Kabupaten Luwu, Sulawesi Selatan.
+Website pelatihan penguatan kapasitas **Perencanaan Zonasi Spasial** untuk Kabupaten Luwu, Sulawesi Selatan.
 
 ## Halaman
 
@@ -14,7 +14,7 @@ Website pelatihan penguatan kapasitas **Zonasi Spasial** untuk Kabupaten Luwu, S
 
 ## Modul Pelatihan
 
-1. **Konsep Dasar Zonasi Spasial** — Fondasi: definisi, urgensi, dasar hukum
+1. **Konsep Dasar Perencanaan Zonasi Spasial** — Fondasi: definisi, urgensi, dasar hukum
 2. **Metodologi Analisis Spasial (MCE-GIS)** — Standardisasi, pembobotan, agregasi, hukum minimum
 3. **Enam Kelompok Indikator Spasial (X1–X6)** — 29 indikator, bobot, kerangka IPCC AR5
 4. **Membaca & Menggunakan Peta Zonasi** — Simbologi, legenda, klasifikasi 5 kelas, interpretasi
@@ -31,7 +31,7 @@ Setiap modul memiliki kuis yang dilindungi PIN. Peserta membuka section **Kuis**
 
 | Modul | PIN |
 |---|---|
-| Modul 1 — Konsep Dasar Zonasi Spasial | **4827** |
+| Modul 1 — Konsep Dasar Perencanaan Zonasi Spasial | **4827** |
 | Modul 2 — Metodologi Analisis Spasial (MCE-GIS) | **7391** |
 | Modul 3 — Enam Kelompok Indikator Spasial | **1563** |
 | Modul 4 — Membaca & Menggunakan Peta Zonasi | **9045** |

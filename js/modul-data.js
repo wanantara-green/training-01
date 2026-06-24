@@ -1,5 +1,5 @@
 /* =====================================================================
-   DATA MODUL PELATIHAN — Zonasi Spasial Kabupaten Luwu
+   DATA MODUL PELATIHAN — Perencanaan Zonasi Spasial Kabupaten Luwu
    Independen. Konten lengkap siap pakai.
    Struktur tiap modul: { id, kode, judul, ikon, ringkas, durasi, sections[], quiz[] }
    section: { id, judul, html }
@@ -54,7 +54,7 @@ const KELAS5 = [
 const MODULES = [
   /* ============ MODUL 0 — PENGANTAR ============ */
   {
-    id:0, kode:'Modul 1', judul:'Konsep Dasar Zonasi Spasial & FOLUR', pin:'4827',
+    id:0, kode:'Modul 1', judul:'Konsep Dasar Perencanaan Zonasi Spasial & FOLUR', pin:'4827',
     ikon:'fa-book-open', durasi:'25 menit', ringkas:'Fondasi: apa itu zonasi spasial, mengapa penting, dan bagaimana FOLUR menjadi kerangkanya.',
     sections:[
       { id:'s1', judul:'Apa itu zonasi spasial?', html:`

@@ -1,5 +1,5 @@
 /* =====================================================================
-   APP — Modul Pelatihan Zonasi Spasial (independen)
+   APP — Modul Pelatihan Perencanaan Zonasi Spasial (independen)
    ===================================================================== */
 
 let currentModule = 0;
