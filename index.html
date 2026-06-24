@@ -92,7 +92,7 @@
 							   class="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-green-800 font-medium px-6 py-3 rounded-lg border border-green-200 transition">
 								Masuk ke Daftar Modul <i class="fas fa-arrow-right"></i>
 							</a>
-							<a href="map.html"
+							<a href="map.html" id="btnPeta"
 							   class="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-green-800 font-medium px-6 py-3 rounded-lg border border-green-200 transition">
 								<i class="fas fa-map"></i> Lihat Peta Interaktif
 							</a>
@@ -339,6 +339,15 @@
 		document.getElementById('mobileBtn')?.addEventListener('click', () => {
 			document.getElementById('mobileMenu')?.classList.toggle('hidden');
 		});
+
+		// Disable peta button if not registered
+		if(!getUser()){
+			const btnPeta = document.getElementById('btnPeta');
+			if(btnPeta){
+				btnPeta.classList.add('opacity-40','pointer-events-none');
+				btnPeta.removeAttribute('href');
+			}
+		}
 
 		const observer = new IntersectionObserver((entries) => {
 			entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('visible'); observer.unobserve(en.target); } });
