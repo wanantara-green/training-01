@@ -55,7 +55,7 @@ const MODULES = [
   /* ============ MODUL 0 — PENGANTAR ============ */
   {
     id:0, kode:'Modul 1', judul:'Konsep Dasar Perencanaan Zonasi Spasial & FOLUR', pin:'4827',
-    ikon:'fa-book-open', durasi:'25 menit', ringkas:'Fondasi: apa itu zonasi spasial, mengapa penting, dan bagaimana FOLUR menjadi kerangkanya.',
+    ikon:'fa-book-open', durasi:'15 menit', ringkas:'Fondasi: apa itu zonasi spasial, mengapa penting, dan bagaimana FOLUR menjadi kerangkanya.',
     sections:[
       { id:'s1', judul:'Apa itu zonasi spasial?', html:`
         <p>Zonasi spasial adalah pembagian suatu wilayah menjadi <strong>zona-zona dengan arahan pemanfaatan yang berbeda</strong>, berdasarkan karakteristik fisik, lingkungan, sosial, dan ekonomi yang melekat pada ruang tersebut. Tujuannya memastikan setiap petak lahan digunakan sesuai daya dukung dan kerentanannya — bukan sekadar berdasarkan permintaan sesaat.</p>
@@ -103,7 +103,7 @@ const MODULES = [
   /* ============ MODUL 1 — METODOLOGI ============ */
   {
     id:1, kode:'Modul 2', judul:'Metodologi Analisis Spasial (MCE-GIS)', pin:'7391',
-    ikon:'fa-diagram-project', durasi:'30 menit', ringkas:'Bagaimana banyak indikator digabung menjadi satu peta zonasi melalui evaluasi multi-kriteria.',
+    ikon:'fa-diagram-project', durasi:'15 menit', ringkas:'Bagaimana banyak indikator digabung menjadi satu peta zonasi melalui evaluasi multi-kriteria.',
     sections:[
       { id:'s1', judul:'Gambaran umum alur analisis', html:`
         <p>Inti penyusunan zonasi Luwu adalah <strong>MCE-GIS</strong> (Multi-Criteria Evaluation berbasis SIG): metode yang menggabungkan banyak lapisan indikator — masing-masing dengan bobot kepentingannya — menjadi satu peta keputusan.</p>
@@ -242,7 +242,7 @@ const MODULES = [
   /* ============ MODUL 2 — ENAM KELOMPOK INDIKATOR ============ */
   {
     id:2, kode:'Modul 3', judul:'Enam Kelompok Indikator Spasial (X1–X6)', pin:'1563',
-    ikon:'fa-layer-group', durasi:'35 menit', ringkas:'Mengenal 29 indikator dalam 6 kelompok beserta bobotnya — fondasi seluruh peta zonasi.',
+    ikon:'fa-layer-group', durasi:'15 menit', ringkas:'Mengenal 29 indikator dalam 6 kelompok beserta bobotnya — fondasi seluruh peta zonasi.',
     sections:[
       { id:'s1', judul:'Struktur penilaian', html:`
         <p>Seluruh penilaian zonasi Luwu dibangun dari <strong>29 indikator</strong> yang dikelompokkan menjadi <strong>6 konstruk</strong> (X1–X6). Tiap konstruk mewakili satu dimensi penilaian, dan tiap indikator membawa bobotnya sendiri.</p>
@@ -285,7 +285,7 @@ const MODULES = [
   /* ============ MODUL 3 — MEMBACA PETA ============ */
   {
     id:3, kode:'Modul 4', judul:'Membaca & Menggunakan Peta Zonasi', pin:'9045',
-    ikon:'fa-map-location-dot', durasi:'30 menit', ringkas:'Praktik: simbologi, legenda, klasifikasi 5 kelas, dan interpretasi zona pada peta interaktif.',
+    ikon:'fa-map-location-dot', durasi:'15 menit', ringkas:'Praktik: simbologi, legenda, klasifikasi 5 kelas, dan interpretasi zona pada peta interaktif.',
     sections:[
       { id:'s1', judul:'Anatomi peta zonasi', html:`
         <p>Peta zonasi terdiri dari beberapa komponen yang perlu dibaca bersama: <strong>layer indikator</strong>, <strong>legenda</strong> (skema warna tiap kelas), <strong>peta dasar</strong>, dan <strong>info atribut</strong> yang muncul saat sebuah fitur diklik.</p>
@@ -328,7 +328,7 @@ const MODULES = [
   /* ============ MODUL 4 — PENERAPAN REGULASI ============ */
   {
     id:4, kode:'Modul 5', judul:'Penerapan Zonasi dalam Peraturan & Perizinan', pin:'6182',
-    ikon:'fa-gavel', durasi:'25 menit', ringkas:'Menerjemahkan zona menjadi ketentuan kegiatan, dan kaitannya dengan KKPR serta revisi RTRW.',
+    ikon:'fa-gavel', durasi:'15 menit', ringkas:'Menerjemahkan zona menjadi ketentuan kegiatan, dan kaitannya dengan KKPR serta revisi RTRW.',
     sections:[
       { id:'s1', judul:'Dari peta ke aturan', html:`
         <p>Peta zonasi hanya bermakna jika diterjemahkan menjadi <strong>ketentuan yang mengikat</strong>. Setiap zona memerlukan rumusan: kegiatan apa yang <strong>diperbolehkan</strong>, <strong>diperbolehkan bersyarat/terbatas</strong>, dan <strong>dilarang</strong>.</p>
@@ -368,7 +368,7 @@ const MODULES = [
   /* ============ MODUL 5 — MONITORING & EVALUASI ============ */
   {
     id:5, kode:'Modul 6', judul:'Pemantauan & Evaluasi Zonasi', pin:'2750',
-    ikon:'fa-chart-line', durasi:'20 menit', ringkas:'Konsep alat bantu keputusan, indikator kepatuhan, dan pemutakhiran data berbasis InaRISK/BPBD.',
+    ikon:'fa-chart-line', durasi:'15 menit', ringkas:'Konsep alat bantu keputusan, indikator kepatuhan, dan pemutakhiran data berbasis InaRISK/BPBD.',
     sections:[
       { id:'s1', judul:'Mengapa pemantauan diperlukan', html:`
         <p>Zonasi bukan dokumen sekali jadi. Kondisi lapangan berubah — tutupan lahan bergeser, infrastruktur bertambah, risiko bencana berevolusi. <strong>Pemantauan dan evaluasi (M&E)</strong> menjaga agar zonasi tetap relevan dan ditaati.</p>
