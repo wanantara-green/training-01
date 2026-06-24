@@ -181,7 +181,7 @@ function buildModuleGrid(){
     return `
     <button ${open ? `onclick="openModule(${m.id})"` : 'disabled'} class="${open?'mod-card':''} reveal relative text-left bg-white rounded-2xl border border-gray-200 p-6 flex flex-col ${open?'':'opacity-50 cursor-not-allowed'}">
       <span class="modDone text-green-600 text-lg ${completed.has(m.id)?'':'invisible'} absolute top-4 right-4" data-done="${m.id}"><i class="fas fa-circle-check"></i></span>
-      <span class="mod-badge inline-flex items-center self-start text-sm font-semibold tracking-wide ${open?'text-green-800 bg-green-50 border-green-200':'text-gray-400 bg-gray-50 border-gray-200'} border px-3 py-1.5 rounded-lg mb-4">${m.kode}</span>
+      <span class="mod-badge inline-flex items-center self-start text-sm font-semibold tracking-wide ${open?'text-white bg-green-700 border-green-700':'text-gray-400 bg-gray-50 border-gray-200'} border px-3 py-1.5 rounded-lg mb-4">${m.kode}</span>
       <h4 class="font-bold text-lg ${open?'text-gray-800':'text-gray-400'} leading-snug">${m.judul}</h4>
       <p class="prose-body text-sm ${open?'text-gray-500':'text-gray-400'} mt-2 flex-1 leading-relaxed">${m.ringkas}</p>
       <div class="flex items-center justify-between mt-5 pt-4 border-t border-gray-100">
