@@ -88,7 +88,7 @@
 
 					<div class="mt-8">
 						<div class="flex flex-wrap gap-3">
-							<a href="modul.html#daftar-modul"
+							<a href="modul.html#daftar-modul" id="btnMasukModul"
 							   class="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-green-800 font-medium px-6 py-3 rounded-lg border border-green-200 transition">
 								Masuk ke Daftar Modul <i class="fas fa-arrow-right"></i>
 							</a>
@@ -126,9 +126,9 @@
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 			<div class="max-w-3xl">
 				<span class="text-xs font-semibold tracking-wide uppercase text-green-700">Alur Belajar</span>
-				<h3 class="text-2xl sm:text-3xl font-bold mt-2" style="color:var(--green-900)">Mulai dari pengantar, lanjut ke materi, lalu baca peta</h3>
+				<h3 id="welcomeTitle" class="text-2xl sm:text-3xl font-bold mt-2" style="color:var(--green-900)">Mulai dari pengantar, lanjut ke materi, lalu baca peta</h3>
 				<p class="prose-body text-gray-600 mt-4 leading-relaxed">
-					Beranda ini dirancang sebagai titik awal. Peserta dapat masuk ke modul pengantar terlebih dahulu,
+					Beranda ini dirancang sebagai titik awal. <strong id="welcomeName">Peserta</strong> dapat masuk ke modul pengantar terlebih dahulu,
 					menelusuri seluruh daftar modul sesuai urutan kurikulum, lalu menggunakan peta interaktif untuk
 					menghubungkan konsep pembelajaran dengan data spasial di lapangan.
 				</p>
@@ -289,7 +289,48 @@
 		</div>
 	</footer>
 
+	<div id="regModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 hidden">
+		<div class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm mx-4">
+			<h3 class="text-lg font-bold text-gray-900 mb-1">Selamat Datang</h3>
+			<p class="text-sm text-gray-500 mb-5">Silakan isi data peserta sebelum memulai pelatihan.</p>
+			<label class="block text-xs font-semibold text-gray-600 mb-1">Nama</label>
+			<input type="text" id="regName" class="w-full border-2 border-gray-200 rounded-lg px-3 py-2 text-sm focus:border-green-600 focus:outline-none mb-3" placeholder="Nama lengkap" onkeydown="if(event.key==='Enter')document.getElementById('regInstansi').focus()">
+			<label class="block text-xs font-semibold text-gray-600 mb-1">Instansi</label>
+			<input type="text" id="regInstansi" class="w-full border-2 border-gray-200 rounded-lg px-3 py-2 text-sm focus:border-green-600 focus:outline-none mb-5" placeholder="Instansi / lembaga" onkeydown="if(event.key==='Enter')submitReg()">
+			<button onclick="submitReg()" class="w-full text-sm font-medium text-white bg-green-700 hover:bg-green-800 rounded-lg px-4 py-2.5">Mulai Pelatihan</button>
+		</div>
+	</div>
+
 	<script>
+		const USER_KEY = 'training-01-user';
+		function getUser(){ try { return JSON.parse(localStorage.getItem(USER_KEY)); } catch(_) { return null; } }
+		function saveUser(data){ localStorage.setItem(USER_KEY, JSON.stringify(data)); }
+
+		(function initWelcome(){
+			const user = getUser();
+			if(!user) return;
+			const nameEl = document.getElementById('welcomeName');
+			const titleEl = document.getElementById('welcomeTitle');
+			if(nameEl) nameEl.textContent = user.name;
+			if(titleEl) titleEl.textContent = 'Selamat datang, '+user.name+'!';
+		})();
+
+		document.getElementById('btnMasukModul').addEventListener('click', function(e){
+			if(getUser()){ window.location.href = 'modul.html#daftar-modul'; return; }
+			e.preventDefault();
+			document.getElementById('regModal').classList.remove('hidden');
+			setTimeout(()=>document.getElementById('regName').focus(), 100);
+		});
+
+		window.submitReg = function(){
+			const name = document.getElementById('regName').value.trim();
+			const instansi = document.getElementById('regInstansi').value.trim();
+			if(!name || !instansi){ alert('Mohon isi Nama dan Instansi.'); return; }
+			saveUser({name, instansi});
+			document.getElementById('regModal').classList.add('hidden');
+			window.location.href = 'modul.html#daftar-modul';
+		};
+
 		document.getElementById('mobileBtn')?.addEventListener('click', () => {
 			document.getElementById('mobileMenu')?.classList.toggle('hidden');
 		});

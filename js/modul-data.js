@@ -77,7 +77,7 @@ const MODULES = [
       `},
       { id:'s4', judul:'Dasar hukum dan kebijakan', html:`
         <p>Zonasi spasial berpijak pada sejumlah landasan, antara lain:</p>
-        <ul>
+        <ul class="list-disc ml-4">
           <li>Undang-Undang Penataan Ruang dan turunannya (RTRW, RDTR, KKPR);</li>
           <li>Ketentuan Daya Dukung & Daya Tampung Lingkungan Hidup (DDDTLH);</li>
           <li>Pedoman kesesuaian lahan pertanian (mis. Permentan terkait);</li>

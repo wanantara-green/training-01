@@ -1,5 +1,7 @@
 # Pelatihan Zonasi Spasial Kabupaten Luwu
 
+> Training online ini dipublikasikan di **[training-01.wanantara.org](https://training-01.wanantara.org)**
+
 Website pelatihan penguatan kapasitas **Zonasi Spasial** untuk Kabupaten Luwu, Sulawesi Selatan.
 
 ## Halaman

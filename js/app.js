@@ -6,6 +6,43 @@ let currentModule = 0;
 const completed = new Set();
 const quizUnlocked = new Set();
 const PROGRESS_STORAGE_KEY = 'training-01-modul-progress';
+const QUIZ_UNLOCK_KEY = 'training-01-quiz-unlocked';
+const QUIZ_ANSWER_KEY = 'training-01-quiz-answers';
+const USER_KEY = 'training-01-user';
+
+function getUser(){ try { return JSON.parse(localStorage.getItem(USER_KEY)); } catch(_) { return null; } }
+
+function loadQuizUnlocks(){
+  try {
+    const raw = localStorage.getItem(QUIZ_UNLOCK_KEY);
+    if(!raw) return;
+    JSON.parse(raw).forEach(id => quizUnlocked.add(id));
+  } catch(_){}
+}
+function saveQuizUnlocks(){
+  try { localStorage.setItem(QUIZ_UNLOCK_KEY, JSON.stringify([...quizUnlocked])); } catch(_){}
+}
+
+function loadQuizAnswers(){
+  try {
+    const raw = localStorage.getItem(QUIZ_ANSWER_KEY);
+    if(!raw) return;
+    window._quizState = JSON.parse(raw);
+  } catch(_){}
+}
+function saveQuizAnswers(){
+  try { localStorage.setItem(QUIZ_ANSWER_KEY, JSON.stringify(window._quizState || {})); } catch(_){}
+}
+
+function loadUserBadge(){
+  const user = getUser();
+  const badge = document.getElementById('userBadge');
+  const text = document.getElementById('userBadgeText');
+  if(user && badge && text){
+    badge.classList.remove('hidden');
+    text.textContent = user.name + ' — ' + user.instansi;
+  }
+}
 
 function loadProgress(){
   try {
@@ -124,19 +161,35 @@ function buildHeroLayers(){
 }
 
 /* ---------- Module grid ---------- */
+function isModuleAccessible(id){
+  return id === 0 || completed.has(id - 1);
+}
+
+function getModuleScore(id){
+  const m = MODULES[id];
+  if(!m.quiz || !m.quiz.length) return null;
+  const state = (window._quizState || {})[id];
+  if(!state || state.some(v=>v===null)) return null;
+  const correct = state.filter((v,i)=>v===m.quiz[i].a).length;
+  return `${correct}/${m.quiz.length}`;
+}
+
 function buildModuleGrid(){
   const grid = document.getElementById('moduleGrid');
-  grid.innerHTML = MODULES.map((m,i)=>`
-    <button onclick="openModule(${m.id})" class="mod-card reveal relative text-left bg-white rounded-2xl border border-gray-200 p-6 flex flex-col">
+  grid.innerHTML = MODULES.map((m,i)=>{
+    const open = isModuleAccessible(m.id);
+    return `
+    <button ${open ? `onclick="openModule(${m.id})"` : 'disabled'} class="${open?'mod-card':''} reveal relative text-left bg-white rounded-2xl border border-gray-200 p-6 flex flex-col ${open?'':'opacity-50 cursor-not-allowed'}">
       <span class="modDone text-green-600 text-lg ${completed.has(m.id)?'':'invisible'} absolute top-4 right-4" data-done="${m.id}"><i class="fas fa-circle-check"></i></span>
-      <span class="mod-badge inline-flex items-center self-start text-sm font-semibold tracking-wide text-green-800 bg-green-50 border border-green-200 px-3 py-1.5 rounded-lg mb-4">${m.kode}</span>
-      <h4 class="font-bold text-lg text-gray-800 leading-snug">${m.judul}</h4>
-      <p class="prose-body text-sm text-gray-500 mt-2 flex-1 leading-relaxed">${m.ringkas}</p>
+      <span class="mod-badge inline-flex items-center self-start text-sm font-semibold tracking-wide ${open?'text-green-800 bg-green-50 border-green-200':'text-gray-400 bg-gray-50 border-gray-200'} border px-3 py-1.5 rounded-lg mb-4">${m.kode}</span>
+      <h4 class="font-bold text-lg ${open?'text-gray-800':'text-gray-400'} leading-snug">${m.judul}</h4>
+      <p class="prose-body text-sm ${open?'text-gray-500':'text-gray-400'} mt-2 flex-1 leading-relaxed">${m.ringkas}</p>
       <div class="flex items-center justify-between mt-5 pt-4 border-t border-gray-100">
-        <span class="text-xs text-gray-400 flex items-center gap-1.5"><i class="far fa-clock"></i> ${m.durasi}</span>
-        <span class="mod-arrow text-green-700 opacity-60 transition flex items-center gap-1.5 text-sm font-medium" style="color:var(--green-700)">Buka <i class="fas fa-arrow-right text-xs"></i></span>
+        ${(()=>{ const sc = getModuleScore(m.id); return sc ? `<span class="text-xs text-green-700 font-semibold flex items-center gap-1.5"><i class="fas fa-award"></i> ${sc}</span>` : `<span class="text-xs text-gray-400 flex items-center gap-1.5"><i class="far fa-clock"></i> ${m.durasi}</span>`; })()}
+        ${open ? `<span class="mod-arrow text-green-700 opacity-60 transition flex items-center gap-1.5 text-sm font-medium" style="color:var(--green-700)">Buka <i class="fas fa-arrow-right text-xs"></i></span>` : `<span class="text-xs text-gray-400 flex items-center gap-1.5"><i class="fas fa-lock"></i> Selesaikan modul sebelumnya</span>`}
       </div>
-    </button>`).join('');
+    </button>`;
+  }).join('');
   observeReveals();
 }
 
@@ -174,6 +227,10 @@ function openModule(id){
         </span>
       </div>
     </div>`;
+  const user = getUser();
+  if(user){
+    html += `<div class="text-xs text-gray-500 border-b border-gray-100 pb-3 mb-1 flex items-center gap-2"><i class="fas fa-user text-green-600"></i> ${user.name} &mdash; ${user.instansi}</div>`;
+  }
   m.sections.forEach((s,i)=>{
     html += `<section id="${s.id}"><h3><span class="sx">${i+1}</span>${s.judul}</h3>${s.html}</section>`;
   });
@@ -196,7 +253,17 @@ function openModule(id){
 
   // nav buttons
   document.getElementById('prevBtn').style.visibility = id===0 ? 'hidden':'visible';
-  document.getElementById('nextBtn').style.visibility = id===MODULES.length-1 ? 'hidden':'visible';
+  const nextBtn = document.getElementById('nextBtn');
+  if(id === MODULES.length - 1){
+    nextBtn.style.visibility = 'hidden';
+  } else {
+    nextBtn.style.visibility = 'visible';
+    if(moduleCompleted){
+      nextBtn.classList.remove('opacity-40','pointer-events-none');
+    } else {
+      nextBtn.classList.add('opacity-40','pointer-events-none');
+    }
+  }
 
   setupScrollSpy();
   window.scrollTo({top:0,behavior:'smooth'});
@@ -257,6 +324,7 @@ function unlockQuiz(mid){
   const entered = (input.value||'').trim();
   if(entered === m.pin){
     quizUnlocked.add(mid);
+    saveQuizUnlocks();
     const gate = document.getElementById('pinGate');
     if(gate) gate.style.display = 'none';
     buildQuiz(m);
@@ -269,24 +337,39 @@ function unlockQuiz(mid){
 }
 
 function buildQuiz(m){
+  const user = getUser();
   const host = document.getElementById('quizHost');
-  host.innerHTML = `<div class="quiz-wrap"><div id="quizItems"></div>
+  host.innerHTML = `<div class="quiz-wrap">
+    ${user ? `<div class="text-xs text-gray-500 mb-4 pb-3 border-b border-gray-100 flex items-center gap-2"><i class="fas fa-user text-green-600"></i> ${user.name} &mdash; ${user.instansi}</div>` : ''}
+    <div id="quizItems"></div>
     <div id="quizResult" class="hidden mt-4 p-4 rounded-lg text-center"></div></div>`;
   const items = document.getElementById('quizItems');
-  const state = m.quiz.map(()=>null);
+  const savedState = (window._quizState || {})[m.id];
+  const state = savedState ? savedState.slice() : m.quiz.map(()=>null);
 
   items.innerHTML = m.quiz.map((q,qi)=>`
     <div class="mb-5" data-q="${qi}">
       <div class="quiz-q"><span class="qn">${qi+1}.</span><span>${q.q}</span></div>
       ${q.opts.map((o,oi)=>`
-        <div class="quiz-opt" onclick="answerQuiz(${m.id},${qi},${oi})" data-q="${qi}" data-o="${oi}">
-          <span class="mk">${String.fromCharCode(65+oi)}</span><span>${o}</span>
+        <div class="quiz-opt ${state[qi]!==null?'disabled':''} ${state[qi]===oi && oi===q.a?'correct':''} ${state[qi]===oi && oi!==q.a?'wrong':''} ${state[qi]!==null && oi===q.a?'correct':''}" onclick="answerQuiz(${m.id},${qi},${oi})" data-q="${qi}" data-o="${oi}">
+          <span class="mk">${state[qi]!==null && oi===q.a ? '<i class="fas fa-check"></i>' : (state[qi]===oi && oi!==q.a ? '<i class="fas fa-xmark"></i>' : String.fromCharCode(65+oi))}</span><span>${o}</span>
         </div>`).join('')}
-      <div class="quiz-feedback hidden" data-fb="${qi}"></div>
+      <div class="quiz-feedback ${state[qi]!==null?'':'hidden'}" data-fb="${qi}" style="color:${state[qi]===q.a?'#16a34a':'#dc2626'}">${state[qi]!==null ? (state[qi]===q.a ? '<i class="fas fa-check-circle"></i> Benar.' : '<i class="fas fa-circle-info"></i> Belum tepat — perhatikan jawaban yang ditandai hijau.') : ''}</div>
     </div>`).join('');
 
   window._quizState = window._quizState || {};
   window._quizState[m.id] = state;
+
+  // If quiz was already completed, show result
+  if(state.every(v=>v!==null)){
+    const score = state.filter((v,i)=>v===m.quiz[i].a).length;
+    const res = document.getElementById('quizResult');
+    res.classList.remove('hidden');
+    res.style.background = '#f0fdf4'; res.style.border='1px solid #dcfce7';
+    res.innerHTML = `<div class="text-green-800 font-semibold" style="font-family:Poppins">
+      <i class="fas fa-award"></i> Skor: ${score}/${m.quiz.length}</div>
+      <div class="text-sm text-gray-600 mt-1">Modul sudah diselesaikan.</div>`;
+    }
 }
 
 function answerQuiz(mid, qi, oi){
@@ -318,6 +401,8 @@ function answerQuiz(mid, qi, oi){
       <i class="fas fa-award"></i> Skor: ${score}/${m.quiz.length}</div>
       <div class="text-sm text-gray-600 mt-1">Modul ditandai selesai. Lanjut ke modul berikutnya untuk meneruskan pembelajaran.</div>`;
     markComplete(mid);
+    saveQuizAnswers();
+    setTimeout(()=>location.reload(), 1200);
   }
 }
 
@@ -425,8 +510,12 @@ function confirmReset(){
   completed.clear();
   document.querySelectorAll('.modDone').forEach(e=>e.classList.add('invisible'));
   try { window.localStorage.removeItem(PROGRESS_STORAGE_KEY); } catch (_) {}
+  try { window.localStorage.removeItem(QUIZ_ANSWER_KEY); } catch (_) {}
+  window._quizState = {};
 
   closeResetModal();
+  buildModuleGrid();
+  buildReport();
   renderProgress();
   showProgressNotice('Progres berhasil direset. Anda dapat memulai pelatihan dari awal.');
 }
@@ -479,10 +568,52 @@ function openModuleFromQuery(){
   openModule(moduleId);
 }
 
-/* ---------- Init ---------- */
+/* ---------- Report ---------- */
+function buildReport(){
+  const grid = document.getElementById('reportGrid');
+  const final = document.getElementById('reportFinal');
+  if(!grid || !final) return;
+
+  let totalCorrect = 0;
+  let totalQuestions = 0;
+
+  grid.innerHTML = MODULES.map(m => {
+    const state = (window._quizState || {})[m.id];
+    const done = state && state.every(v => v !== null);
+    let scoreHtml, total;
+    if(done){
+      const correct = state.filter((v,i) => v === m.quiz[i].a).length;
+      total = m.quiz.length;
+      totalCorrect += correct;
+      totalQuestions += total;
+      scoreHtml = `<span class="text-green-700 font-bold">${correct}/${total}</span>`;
+    } else {
+      scoreHtml = `<span class="text-gray-400">—</span>`;
+    }
+    return `
+    <div class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-4 py-3">
+      <span class="text-sm font-medium text-gray-700">${m.kode}</span>
+      ${scoreHtml}
+    </div>`;
+  }).join('');
+
+  if(totalQuestions > 0){
+    final.classList.remove('hidden');
+    final.innerHTML = `<div class="flex items-center justify-between">
+      <span class="font-semibold text-green-900">Nilai Akhir Pelatihan</span>
+      <span class="text-lg font-bold text-green-700">${totalCorrect}/${totalQuestions}</span>
+    </div>`;
+  } else {
+    final.classList.add('hidden');
+  }
+}
 buildHeroLayers();
 loadProgress();
+loadQuizUnlocks();
+loadQuizAnswers();
+loadUserBadge();
 buildModuleGrid();
+buildReport();
 observeReveals();
 renderProgress();
 openModuleFromQuery();
