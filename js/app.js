@@ -512,6 +512,8 @@ function confirmReset(){
   try { window.localStorage.removeItem(PROGRESS_STORAGE_KEY); } catch (_) {}
   try { window.localStorage.removeItem(QUIZ_ANSWER_KEY); } catch (_) {}
   try { window.localStorage.removeItem(USER_KEY); } catch (_) {}
+  try { window.localStorage.removeItem(QUIZ_UNLOCK_KEY); } catch (_) {}
+  quizUnlocked.clear();
   window._quizState = {};
 
   // Hide user badge
