@@ -4,6 +4,7 @@
 
 let currentModule = 0;
 const completed = new Set();
+const quizUnlocked = new Set();
 const PROGRESS_STORAGE_KEY = 'training-01-modul-progress';
 
 function loadProgress(){
@@ -92,6 +93,14 @@ function saveProgress(){
   .quiz-opt.correct .mk{border-color:#16a34a;background:#16a34a;color:#fff;}
   .quiz-opt.wrong .mk{border-color:#dc2626;background:#dc2626;color:#fff;}
   .quiz-feedback{font-size:.88rem;margin-top:.5rem;font-weight:500;}
+  /* pin gate */
+  .pin-gate{text-align:center;padding:1.5rem 1rem;}
+  .pin-gate .pin-hint{color:#6b7280;margin-bottom:.75rem;font-size:.92rem;}
+  .pin-input{border:2px solid #e5e7eb;border-radius:.6rem;padding:.55rem .7rem;font-size:1.4rem;width:140px;text-align:center;letter-spacing:.35em;font-family:ui-monospace,monospace;font-weight:600;color:#1f2937;}
+  .pin-input:focus{border-color:var(--green-600);outline:none;box-shadow:0 0 0 3px rgba(47,158,79,.15);}
+  .pin-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem 1.3rem;border-radius:.6rem;background:var(--green-700);color:#fff;font-weight:600;font-family:'Poppins';cursor:pointer;border:none;font-size:.88rem;transition:background .2s;}
+  .pin-btn:hover{background:var(--green-800);}
+  .pin-error{color:#dc2626;font-size:.85rem;margin-top:.5rem;}
   `;
   const s = document.createElement('style'); s.textContent = css; document.head.appendChild(s);
 })();
@@ -118,15 +127,10 @@ function buildHeroLayers(){
 function buildModuleGrid(){
   const grid = document.getElementById('moduleGrid');
   grid.innerHTML = MODULES.map((m,i)=>`
-    <button onclick="openModule(${m.id})" class="mod-card reveal text-left bg-white rounded-2xl border border-gray-200 p-6 flex flex-col">
-      <div class="flex items-start justify-between mb-4">
-        <span class="mod-num w-11 h-11 rounded-xl bg-green-50 text-green-700 flex items-center justify-center text-lg transition">
-          <i class="fas ${m.ikon}"></i>
-        </span>
-        <span class="modDone text-green-600 text-lg ${completed.has(m.id)?'':'invisible'}" data-done="${m.id}"><i class="fas fa-circle-check"></i></span>
-      </div>
-      <span class="text-[11px] font-semibold uppercase tracking-wide text-green-700">${m.kode}</span>
-      <h4 class="font-bold text-lg text-gray-800 mt-1 leading-snug">${m.judul}</h4>
+    <button onclick="openModule(${m.id})" class="mod-card reveal relative text-left bg-white rounded-2xl border border-gray-200 p-6 flex flex-col">
+      <span class="modDone text-green-600 text-lg ${completed.has(m.id)?'':'invisible'} absolute top-4 right-4" data-done="${m.id}"><i class="fas fa-circle-check"></i></span>
+      <span class="mod-badge inline-flex items-center self-start text-sm font-semibold tracking-wide text-green-800 bg-green-50 border border-green-200 px-3 py-1.5 rounded-lg mb-4">${m.kode}</span>
+      <h4 class="font-bold text-lg text-gray-800 leading-snug">${m.judul}</h4>
       <p class="prose-body text-sm text-gray-500 mt-2 flex-1 leading-relaxed">${m.ringkas}</p>
       <div class="flex items-center justify-between mt-5 pt-4 border-t border-gray-100">
         <span class="text-xs text-gray-400 flex items-center gap-1.5"><i class="far fa-clock"></i> ${m.durasi}</span>
@@ -140,6 +144,7 @@ function buildModuleGrid(){
 function openModule(id){
   currentModule = id;
   const m = MODULES[id];
+  const quizOpen = quizUnlocked.has(m.id);
   document.getElementById('homeView').classList.remove('active');
   document.getElementById('moduleView').classList.add('active');
 
@@ -149,7 +154,7 @@ function openModule(id){
       <span class="text-gray-400 mr-1.5">${i+1}.</span>${s.judul}
     </a>`).join('') + `
     <a href="#quiz" class="toc-link block px-3 py-2 rounded-r-md text-gray-600 hover:text-green-700" data-target="quiz">
-      <i class="fas fa-circle-question mr-1.5 text-gray-400"></i>Kuis
+      <i class="fas ${quizOpen?'fa-circle-question':'fa-lock'} mr-1.5 text-gray-400"></i>Kuis
     </a>`;
 
   // Content
@@ -173,14 +178,21 @@ function openModule(id){
     html += `<section id="${s.id}"><h3><span class="sx">${i+1}</span>${s.judul}</h3>${s.html}</section>`;
   });
   // quiz section
-  html += `<section id="quiz"><h3><span class="sx"><i class="fas fa-pen"></i></span>Kuis Pemahaman</h3>
-    <div id="quizHost"></div></section>`;
+  html += `<section id="quiz"><h3><span class="sx"><i class="fas ${quizOpen?'fa-pen':'fa-lock'}"></i></span>Kuis Pemahaman</h3>
+    <div id="quizHost">
+      ${quizOpen ? '' : `<div id="pinGate" class="quiz-wrap pin-gate">
+        <div class="pin-hint"><i class="fas fa-lock text-gray-400 mr-1.5"></i>Masukkan PIN untuk membuka kuis</div>
+        <input type="text" id="pinInput" class="pin-input" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="••••" onkeydown="if(event.key==='Enter')unlockQuiz(${m.id})">
+        <br><button class="pin-btn mt-3" onclick="unlockQuiz(${m.id})"><i class="fas fa-key"></i> Buka Kuis</button>
+        <div id="pinError" class="pin-error hidden">PIN tidak tepat. Silakan coba lagi.</div>
+      </div>`}
+    </div></section>`;
   document.getElementById('moduleContent').innerHTML = html;
 
   // dynamic widgets
   if(document.getElementById('indikatorAccordion')) buildIndikatorAccordion();
   if(document.getElementById('kelasLegend')) buildKelasLegend();
-  buildQuiz(m);
+  if(quizOpen) buildQuiz(m);
 
   // nav buttons
   document.getElementById('prevBtn').style.visibility = id===0 ? 'hidden':'visible';
@@ -239,6 +251,23 @@ function buildKelasLegend(){
 }
 
 /* ---------- Quiz ---------- */
+function unlockQuiz(mid){
+  const m = MODULES[mid];
+  const input = document.getElementById('pinInput');
+  const entered = (input.value||'').trim();
+  if(entered === m.pin){
+    quizUnlocked.add(mid);
+    const gate = document.getElementById('pinGate');
+    if(gate) gate.style.display = 'none';
+    buildQuiz(m);
+  } else {
+    const err = document.getElementById('pinError');
+    err.classList.remove('hidden');
+    input.value = '';
+    input.focus();
+  }
+}
+
 function buildQuiz(m){
   const host = document.getElementById('quizHost');
   host.innerHTML = `<div class="quiz-wrap"><div id="quizItems"></div>
@@ -352,18 +381,52 @@ function showProgressNotice(message, tone = 'success'){
 }
 
 function resetProgress(){
-  const confirmed = window.confirm('Reset semua progres belajar dan mulai lagi dari awal?');
-  if (!confirmed) return;
+  showResetModal();
+}
+
+function showResetModal(){
+  const existing = document.getElementById('resetModal');
+  if(existing) existing.remove();
+
+  const overlay = document.createElement('div');
+  overlay.id = 'resetModal';
+  overlay.className = 'fixed inset-0 z-[100] flex items-center justify-center bg-black/40';
+  overlay.onclick = (e) => { if(e.target === overlay) closeResetModal(); };
+  overlay.innerHTML = `
+    <div class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm mx-4">
+      <h3 class="text-lg font-bold text-gray-900 mb-2">Reset Progres</h3>
+      <p class="text-sm text-gray-600 mb-4">Reset semua progres belajar dan mulai lagi dari awal?</p>
+      <label class="block text-xs font-semibold text-gray-500 mb-1">Masukkan PIN</label>
+      <input type="text" id="resetPinInput" class="w-full border-2 border-gray-200 rounded-lg px-3 py-2 text-center text-lg font-mono tracking-[.3em] focus:border-green-600 focus:outline-none" maxlength="4" inputmode="numeric" placeholder="••••" onkeydown="if(event.key==='Enter')confirmReset()">
+      <p id="resetPinError" class="text-red-500 text-xs mt-2 hidden">PIN salah.</p>
+      <div class="flex gap-3 mt-4">
+        <button onclick="closeResetModal()" class="flex-1 text-sm font-medium text-gray-600 border border-gray-200 rounded-lg px-4 py-2 hover:bg-gray-50">Batal</button>
+        <button onclick="confirmReset()" class="flex-1 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg px-4 py-2">Reset</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  setTimeout(()=>document.getElementById('resetPinInput')?.focus(), 100);
+}
+
+function closeResetModal(){
+  document.getElementById('resetModal')?.remove();
+}
+
+function confirmReset(){
+  const input = document.getElementById('resetPinInput');
+  const entered = (input?.value || '').trim();
+  if(entered !== '1234'){
+    const err = document.getElementById('resetPinError');
+    if(err) err.classList.remove('hidden');
+    if(input){ input.value = ''; input.focus(); }
+    return;
+  }
 
   completed.clear();
   document.querySelectorAll('.modDone').forEach(e=>e.classList.add('invisible'));
+  try { window.localStorage.removeItem(PROGRESS_STORAGE_KEY); } catch (_) {}
 
-  try {
-    window.localStorage.removeItem(PROGRESS_STORAGE_KEY);
-  } catch (_) {
-    // Abaikan jika storage tidak tersedia.
-  }
-
+  closeResetModal();
   renderProgress();
   showProgressNotice('Progres berhasil direset. Anda dapat memulai pelatihan dari awal.');
 }

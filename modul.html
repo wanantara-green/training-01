@@ -30,7 +30,7 @@
 
         .mod-card { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
         .mod-card:hover { transform: translateY(-6px); box-shadow: 0 22px 40px -18px rgba(20,54,31,.45); border-color: var(--green-600); }
-        .mod-card:hover .mod-num { background: var(--green-700); color: #fff; }
+        .mod-card:hover .mod-badge { background: var(--green-100); border-color: var(--green-600); }
         .mod-card:hover .mod-arrow { transform: translateX(4px); opacity: 1; }
 
         .ring-bg { stroke: #e5e7eb; }
@@ -53,8 +53,8 @@
         .quiz-opt.disabled { pointer-events:none; }
 
         .hero-contour { background-image:
-            radial-gradient(circle at 20% 30%, rgba(47,158,79,.10), transparent 40%),
-            radial-gradient(circle at 80% 70%, rgba(30,107,59,.12), transparent 45%); }
+            radial-gradient(circle at 20% 30%, rgba(255,255,255,.08), transparent 40%),
+            radial-gradient(circle at 80% 70%, rgba(255,255,255,.06), transparent 45%); }
 
         .mark { background: linear-gradient(transparent 60%, var(--green-100) 60%); }
 
@@ -100,27 +100,24 @@
     </header>
 
     <main id="homeView" class="view active">
-        <section class="hero-contour border-b border-gray-200">
+        <section class="hero-contour border-b border-green-800 bg-green-900">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-14">
                 <div class="grid lg:grid-cols-[1.2fr_.8fr] gap-8 items-start">
                     <div class="reveal">
-                        <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-wide uppercase text-green-800 bg-green-100 px-3 py-1.5 rounded-full mb-4">
+                        <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-wide uppercase text-white bg-white/20 px-3 py-1.5 rounded-full mb-4">
                             <i class="fas fa-book-open"></i> Halaman Materi
                         </span>
-                        <h2 class="text-3xl sm:text-4xl font-bold leading-tight" style="color:var(--green-900)">
+                        <h2 class="text-3xl sm:text-4xl font-bold leading-tight text-white">
                             Pilih modul dan ikuti materi secara bertahap
                         </h2>
-                        <p class="prose-body text-gray-600 mt-4 max-w-3xl leading-relaxed">
+                        <p class="prose-body text-green-100 mt-4 max-w-3xl leading-relaxed">
                             Halaman ini menjadi pusat pembelajaran. Peserta dapat memulai dari modul pengantar,
                             melanjutkan topik metodologi dan indikator, lalu menutup proses belajar dengan membaca
                             hasil zonasi pada peta interaktif.
                         </p>
                         <div class="flex flex-wrap gap-3 mt-6">
-                            <a href="?open=0" class="inline-flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white font-medium px-5 py-3 rounded-lg transition">
+                            <a href="?open=0" class="inline-flex items-center gap-2 bg-white hover:bg-green-50 text-green-800 font-medium px-5 py-3 rounded-lg transition">
                                 <i class="fas fa-play-circle"></i> Buka Modul 1
-                            </a>
-                            <a href="map.html" class="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-green-800 font-medium px-5 py-3 rounded-lg border border-green-200 transition">
-                                <i class="fas fa-map-location-dot"></i> Buka Peta Interaktif
                             </a>
                         </div>
                     </div>
@@ -180,7 +177,7 @@
                             <div id="progressSummaryBar" class="h-full bg-green-700 rounded-full transition-all duration-500" style="width: 0%;"></div>
                         </div>
                         <p id="progressNotice" class="hidden mt-3 text-sm font-medium text-green-700" aria-live="polite"></p>
-                        <button id="resetProgressBtn" type="button" class="mt-4 inline-flex items-center gap-2 text-sm text-gray-600 hover:text-red-600 border border-gray-200 hover:border-red-200 hover:bg-red-50 rounded-lg px-3 py-2 transition">
+                        <button id="resetProgressBtn" type="button" class="mt-4 inline-flex items-center gap-2 text-sm text-white bg-red-600 hover:bg-red-700 border border-red-600 rounded-lg px-3 py-2 transition">
                             <i class="fas fa-rotate-left"></i> Reset Progres
                         </button>
                     </div>

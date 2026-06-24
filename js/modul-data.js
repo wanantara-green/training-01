@@ -54,7 +54,7 @@ const KELAS5 = [
 const MODULES = [
   /* ============ MODUL 0 — PENGANTAR ============ */
   {
-    id:0, kode:'Modul 1', judul:'Konsep Dasar Zonasi Spasial & FOLUR',
+    id:0, kode:'Modul 1', judul:'Konsep Dasar Zonasi Spasial & FOLUR', pin:'4827',
     ikon:'fa-book-open', durasi:'25 menit', ringkas:'Fondasi: apa itu zonasi spasial, mengapa penting, dan bagaimana FOLUR menjadi kerangkanya.',
     sections:[
       { id:'s1', judul:'Apa itu zonasi spasial?', html:`
@@ -102,7 +102,7 @@ const MODULES = [
 
   /* ============ MODUL 1 — METODOLOGI ============ */
   {
-    id:1, kode:'Modul 2', judul:'Metodologi Analisis Spasial (MCE-GIS)',
+    id:1, kode:'Modul 2', judul:'Metodologi Analisis Spasial (MCE-GIS)', pin:'7391',
     ikon:'fa-diagram-project', durasi:'30 menit', ringkas:'Bagaimana banyak indikator digabung menjadi satu peta zonasi melalui evaluasi multi-kriteria.',
     sections:[
       { id:'s1', judul:'Gambaran umum alur analisis', html:`
@@ -241,7 +241,7 @@ const MODULES = [
 
   /* ============ MODUL 2 — ENAM KELOMPOK INDIKATOR ============ */
   {
-    id:2, kode:'Modul 3', judul:'Enam Kelompok Indikator Spasial (X1–X6)',
+    id:2, kode:'Modul 3', judul:'Enam Kelompok Indikator Spasial (X1–X6)', pin:'1563',
     ikon:'fa-layer-group', durasi:'35 menit', ringkas:'Mengenal 29 indikator dalam 6 kelompok beserta bobotnya — fondasi seluruh peta zonasi.',
     sections:[
       { id:'s1', judul:'Struktur penilaian', html:`
@@ -284,7 +284,7 @@ const MODULES = [
 
   /* ============ MODUL 3 — MEMBACA PETA ============ */
   {
-    id:3, kode:'Modul 4', judul:'Membaca & Menggunakan Peta Zonasi',
+    id:3, kode:'Modul 4', judul:'Membaca & Menggunakan Peta Zonasi', pin:'9045',
     ikon:'fa-map-location-dot', durasi:'30 menit', ringkas:'Praktik: simbologi, legenda, klasifikasi 5 kelas, dan interpretasi zona pada peta interaktif.',
     sections:[
       { id:'s1', judul:'Anatomi peta zonasi', html:`
@@ -327,7 +327,7 @@ const MODULES = [
 
   /* ============ MODUL 4 — PENERAPAN REGULASI ============ */
   {
-    id:4, kode:'Modul 5', judul:'Penerapan Zonasi dalam Peraturan & Perizinan',
+    id:4, kode:'Modul 5', judul:'Penerapan Zonasi dalam Peraturan & Perizinan', pin:'6182',
     ikon:'fa-gavel', durasi:'25 menit', ringkas:'Menerjemahkan zona menjadi ketentuan kegiatan, dan kaitannya dengan KKPR serta revisi RTRW.',
     sections:[
       { id:'s1', judul:'Dari peta ke aturan', html:`
@@ -367,7 +367,7 @@ const MODULES = [
 
   /* ============ MODUL 5 — MONITORING & EVALUASI ============ */
   {
-    id:5, kode:'Modul 6', judul:'Pemantauan & Evaluasi Zonasi',
+    id:5, kode:'Modul 6', judul:'Pemantauan & Evaluasi Zonasi', pin:'2750',
     ikon:'fa-chart-line', durasi:'20 menit', ringkas:'Konsep alat bantu keputusan, indikator kepatuhan, dan pemutakhiran data berbasis InaRISK/BPBD.',
     sections:[
       { id:'s1', judul:'Mengapa pemantauan diperlukan', html:`
