@@ -511,6 +511,7 @@ function confirmReset(){
   document.querySelectorAll('.modDone').forEach(e=>e.classList.add('invisible'));
   try { window.localStorage.removeItem(PROGRESS_STORAGE_KEY); } catch (_) {}
   try { window.localStorage.removeItem(QUIZ_ANSWER_KEY); } catch (_) {}
+  try { window.localStorage.removeItem(USER_KEY); } catch (_) {}
   window._quizState = {};
 
   closeResetModal();
