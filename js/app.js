@@ -514,6 +514,10 @@ function confirmReset(){
   try { window.localStorage.removeItem(USER_KEY); } catch (_) {}
   window._quizState = {};
 
+  // Hide user badge
+  const badge = document.getElementById('userBadge');
+  if(badge) badge.classList.add('hidden');
+
   closeResetModal();
   buildModuleGrid();
   buildReport();
