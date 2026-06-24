@@ -186,7 +186,7 @@ function buildModuleGrid(){
       <p class="prose-body text-sm ${open?'text-gray-500':'text-gray-400'} mt-2 flex-1 leading-relaxed">${m.ringkas}</p>
       <div class="flex items-center justify-between mt-5 pt-4 border-t border-gray-100">
         ${(()=>{ const sc = getModuleScore(m.id); return sc ? `<span class="text-xs text-green-700 font-semibold flex items-center gap-1.5"><i class="fas fa-award"></i> ${sc}</span>` : `<span class="text-xs text-gray-400 flex items-center gap-1.5"><i class="far fa-clock"></i> ${m.durasi}</span>`; })()}
-        ${open ? `<span class="mod-arrow text-green-700 opacity-60 transition flex items-center gap-1.5 text-sm font-medium" style="color:var(--green-700)">Buka <i class="fas fa-arrow-right text-xs"></i></span>` : `<span class="text-xs text-gray-400 flex items-center gap-1.5"><i class="fas fa-lock"></i> Selesaikan modul sebelumnya</span>`}
+        ${open ? `<span class="mod-arrow text-green-700 opacity-60 transition flex items-center gap-1.5 text-sm font-medium ml-auto" style="color:var(--green-700)">Buka <i class="fas fa-arrow-right text-xs"></i></span>` : `<span class="text-xs text-gray-400 flex items-center gap-1.5 ml-auto"><i class="fas fa-lock"></i> Selesaikan ${MODULES[m.id-1]?.kode||'modul sebelumnya'}</span>`}
       </div>
     </button>`;
   }).join('');
